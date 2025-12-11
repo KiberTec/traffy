@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Статья о рекламе в Telegram от TRAFFY Agency">
+    <meta name="robots" content="index, follow">
+    
+    <title>Статья — TRAFFY Blog</title>
+    
+    <link rel="icon" type="image/jpeg" href="photo_2025-12-11 14.39.43.jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="blog.css">
+    
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();
+       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+       ym(99999999, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/99999999" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">
+                    <img src="photo_2025-12-11 14.39.43.jpeg" alt="TRAFFY Logo" class="logo-img">
+                    <span class="logo-text">TRAFFY</span>
+                </a>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html#services" class="nav-link">Услуги</a></li>
+                    <li><a href="index.html#cases" class="nav-link">Кейсы</a></li>
+                    <li><a href="index.html#about" class="nav-link">О нас</a></li>
+                    <li><a href="blog.html" class="nav-link active">Блог</a></li>
+                    <li><a href="index.html#contact" class="nav-link">Контакты</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="index.html#contact" class="btn btn-primary">Оставить заявку</a>
+                    <button class="burger" id="burger" aria-label="Меню">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <article class="article-page" id="article-page">
+        <div class="container">
+            <div class="loading-spinner" id="article-loading">
+                <div class="spinner"></div>
+                <p>Загрузка статьи...</p>
+            </div>
+            
+            <div id="article-content" style="display: none;">
+                <!-- Article will be loaded here -->
+            </div>
+        </div>
+    </article>
+
+    <!-- Related Articles -->
+    <section class="related-articles" id="related-articles" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Похожие <span class="gradient-text">статьи</span></h2>
+            <div class="blog-grid" id="related-grid">
+                <!-- Related articles will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="article-cta">
+        <div class="container">
+            <div class="newsletter-card">
+                <div class="newsletter-content">
+                    <h2>Нужна помощь с продвижением?</h2>
+                    <p>Оставьте заявку, и мы поможем запустить рекламу в Telegram</p>
+                </div>
+                <a href="index.html#contact" class="btn btn-primary btn-lg">Оставить заявку</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="photo_2025-12-11 14.39.43.jpeg" alt="TRAFFY Logo" class="logo-img">
+                        <span class="logo-text">TRAFFY</span>
+                    </a>
+                    <p>Первое рекламное агентство, специализирующееся на трафике в Telegram Mini Apps.</p>
+                </div>
+                
+                <div class="footer-nav">
+                    <div class="footer-nav-group">
+                        <h4>Навигация</h4>
+                        <ul>
+                            <li><a href="index.html#services">Услуги</a></li>
+                            <li><a href="index.html#cases">Кейсы</a></li>
+                            <li><a href="blog.html">Блог</a></li>
+                            <li><a href="index.html#contact">Контакты</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-group">
+                        <h4>Контакты</h4>
+                        <ul>
+                            <li><a href="https://t.me/traffy_support" target="_blank">@traffy_support</a></li>
+                            <li><a href="mailto:hello@traffy-robot.ru">hello@traffy-robot.ru</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 TRAFFY. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Load single article
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const articleId = params.get('id');
+            
+            if (!articleId) {
+                window.location.href = 'blog.html';
+                return;
+            }
+            
+            try {
+                const response = await fetch('articles/articles.json');
+                const articles = await response.json();
+                const article = articles.find(a => a.id === articleId);
+                
+                if (!article) {
+                    window.location.href = 'blog.html';
+                    return;
+                }
+                
+                // Update page title and meta
+                document.title = `${article.title} — TRAFFY Blog`;
+                
+                const categoryLabels = {
+                    'telegram-ads': 'Telegram Ads',
+                    'mini-apps': 'Mini Apps',
+                    'traffic': 'Трафик',
+                    'cases': 'Кейсы',
+                    'guides': 'Гайды'
+                };
+                
+                // Format date
+                const date = new Date(article.date);
+                const formattedDate = date.toLocaleDateString('ru-RU', { 
+                    day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric' 
+                });
+                
+                // Display article
+                const contentEl = document.getElementById('article-content');
+                contentEl.innerHTML = `
+                    <div class="article-page-header">
+                        <div class="article-page-meta">
+                            <span class="article-category">${categoryLabels[article.category] || article.category}</span>
+                            <span class="article-date">${formattedDate}</span>
+                            <span class="article-read-time">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                ${article.readTime}
+                            </span>
+                        </div>
+                        <h1 class="article-page-title">${article.title}</h1>
+                        <p class="article-page-excerpt">${article.excerpt}</p>
+                    </div>
+                    
+                    <div class="article-page-content">
+                        <p>Статья в разработке. Скоро здесь появится полезный контент о ${categoryLabels[article.category] || 'рекламе в Telegram'}.</p>
+                        
+                        <h2>Что вы узнаете из этой статьи</h2>
+                        <ul>
+                            <li>Актуальные тренды и стратегии</li>
+                            <li>Пошаговые инструкции</li>
+                            <li>Реальные примеры и кейсы</li>
+                            <li>Советы от экспертов TRAFFY</li>
+                        </ul>
+                        
+                        <blockquote>
+                            <p>«Мы постоянно работаем над созданием качественного контента для наших читателей. Подпишитесь на наш канал, чтобы не пропустить новые статьи!»</p>
+                        </blockquote>
+                        
+                        <p>Если у вас есть вопросы по теме статьи или вы хотите получить консультацию — свяжитесь с нами через форму на сайте или напишите в Telegram.</p>
+                    </div>
+                `;
+                
+                // Hide loading, show content
+                document.getElementById('article-loading').style.display = 'none';
+                contentEl.style.display = 'block';
+                
+                // Show related articles
+                const related = articles.filter(a => a.category === article.category && a.id !== articleId).slice(0, 3);
+                if (related.length > 0) {
+                    const relatedSection = document.getElementById('related-articles');
+                    const relatedGrid = document.getElementById('related-grid');
+                    
+                    related.forEach(relatedArticle => {
+                        const card = document.createElement('article');
+                        card.className = 'article-card';
+                        const relDate = new Date(relatedArticle.date).toLocaleDateString('ru-RU', { 
+                            day: 'numeric', 
+                            month: 'long', 
+                            year: 'numeric' 
+                        });
+                        card.innerHTML = `
+                            <div class="article-image-placeholder">📝</div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <span class="article-category">${categoryLabels[relatedArticle.category]}</span>
+                                    <span class="article-date">${relDate}</span>
+                                </div>
+                                <h2 class="article-title">
+                                    <a href="article.html?id=${relatedArticle.id}">${relatedArticle.title}</a>
+                                </h2>
+                                <p class="article-excerpt">${relatedArticle.excerpt}</p>
+                            </div>
+                        `;
+                        relatedGrid.appendChild(card);
+                    });
+                    
+                    relatedSection.style.display = 'block';
+                }
+                
+            } catch (error) {
+                console.error('Error loading article:', error);
+                window.location.href = 'blog.html';
+            }
+        });
+    </script>
+</body>
+</html>
+

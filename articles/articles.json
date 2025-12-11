@@ -1,0 +1,57 @@
+[
+  {
+    "id": "telegram-ads-guide-2025",
+    "title": "Полный гайд по Telegram Ads в 2025 году: от настройки до масштабирования",
+    "excerpt": "Разбираем все нюансы официальной рекламы Telegram Ads: как запустить кампанию, настроить таргетинг, оптимизировать бюджет и получить максимум конверсий.",
+    "category": "telegram-ads",
+    "date": "2025-12-11",
+    "readTime": "12 мин",
+    "content": "telegram-ads-guide-2025.html"
+  },
+  {
+    "id": "mini-apps-monetization",
+    "title": "Как монетизировать Telegram Mini App: 5 рабочих способов",
+    "excerpt": "Рассказываем о самых эффективных способах заработка на Mini Apps: от rewarded video до внутриигровых покупок и подписок.",
+    "category": "mini-apps",
+    "date": "2025-12-10",
+    "readTime": "8 мин",
+    "content": "mini-apps-monetization.html"
+  },
+  {
+    "id": "traffic-sources-telegram",
+    "title": "Где брать трафик для Telegram-канала в 2025 году",
+    "excerpt": "Полный обзор источников трафика: посевы, Telegram Ads, Mini Apps, взаимный пиар и другие методы привлечения подписчиков.",
+    "category": "traffic",
+    "date": "2025-12-09",
+    "readTime": "10 мин",
+    "content": "traffic-sources-telegram.html"
+  },
+  {
+    "id": "case-crypto-game",
+    "title": "Кейс: 2.5 млн установок для крипто-игры за $200K бюджета",
+    "excerpt": "Разбираем реальный кейс продвижения tap-to-earn игры через рекламу в Mini Apps: стратегия, креативы, метрики и результаты.",
+    "category": "cases",
+    "date": "2025-12-08",
+    "readTime": "15 мин",
+    "content": "case-crypto-game.html"
+  },
+  {
+    "id": "rewarded-video-guide",
+    "title": "Rewarded Video в Telegram: гайд для разработчиков",
+    "excerpt": "Как правильно интегрировать rewarded video в Mini App, чтобы увеличить доход и не испортить user experience.",
+    "category": "guides",
+    "date": "2025-12-07",
+    "readTime": "7 мин",
+    "content": "rewarded-video-guide.html"
+  },
+  {
+    "id": "cpm-rates-2025",
+    "title": "CPM ставки в Telegram рекламе: актуальные данные на декабрь 2025",
+    "excerpt": "Сколько стоит реклама в Telegram сейчас? Разбираем CPM по разным GEO, форматам и нишам.",
+    "category": "traffic",
+    "date": "2025-12-06",
+    "readTime": "6 мин",
+    "content": "cpm-rates-2025.html"
+  }
+]
+
