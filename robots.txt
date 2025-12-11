@@ -1,0 +1,21 @@
+# TRAFFY - Telegram Advertising Agency
+# https://traffy-robot.ru
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://traffy-robot.ru/sitemap.xml
+
+# RSS Feed
+# https://traffy-robot.ru/rss.xml
+
+# Yandex specific
+User-agent: Yandex
+Allow: /
+Host: traffy-robot.ru
+
+# Google specific  
+User-agent: Googlebot
+Allow: /
+
