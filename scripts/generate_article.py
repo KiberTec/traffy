@@ -1,22 +1,15 @@
 #!/usr/bin/env python3
 """
 TRAFFY Blog Article Generator
-Автоматическая генерация статей с использованием AI API (OpenAI / xAI Grok)
+Автоматическая генерация статей с использованием xAI Grok API
 """
 
 import os
 import json
 import random
+import requests
 from datetime import datetime
 from pathlib import Path
-
-# Попробуем импортировать openai, если не установлен - используем requests
-try:
-    from openai import OpenAI
-    HAS_OPENAI = True
-except ImportError:
-    import requests
-    HAS_OPENAI = False
 
 # Конфигурация
 ARTICLES_DIR = Path(__file__).parent.parent / "articles"
@@ -92,27 +85,18 @@ TOPICS = [
 ]
 
 
-def get_ai_client():
-    """Получить клиент для AI API"""
-    # Приоритет: xAI (Grok) -> OpenAI
-    xai_key = os.environ.get("XAI_API_KEY")
-    openai_key = os.environ.get("OPENAI_API_KEY")
+def generate_with_grok(topic: str, category: str) -> dict:
+    """Генерация контента через xAI Grok API"""
+    api_key = os.environ.get("XAI_API_KEY")
     
-    if xai_key:
-        if HAS_OPENAI:
-            return OpenAI(api_key=xai_key, base_url="https://api.x.ai/v1"), "grok-beta"
-        return None, "grok"
-    elif openai_key:
-        if HAS_OPENAI:
-            return OpenAI(api_key=openai_key), "gpt-4o-mini"
-        return None, "openai"
-    else:
-        return None, None
-
-
-def generate_article_content(topic: str, category: str) -> dict:
-    """Генерация контента статьи через AI"""
-    client, model = get_ai_client()
+    if not api_key:
+        print("❌ XAI_API_KEY не найден!")
+        return generate_fallback_article(topic, category)
+    
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
     
     system_prompt = """Ты - эксперт по рекламе в Telegram и маркетингу. 
 Пиши статьи на русском языке. Статьи должны быть:
@@ -121,36 +105,57 @@ def generate_article_content(topic: str, category: str) -> dict:
 - SEO-оптимизированными
 - Легко читаемыми
 
-Формат ответа - JSON:
-{
-    "title": "Заголовок статьи (50-80 символов)",
-    "excerpt": "Краткое описание для превью (150-200 символов)",
-    "readTime": "X мин",
-    "content": "HTML контент статьи с тегами h2, h3, p, ul, li, blockquote"
-}"""
+ВАЖНО: Ответ должен быть ТОЛЬКО валидный JSON без markdown разметки!
+Формат:
+{"title": "Заголовок", "excerpt": "Описание 150-200 символов", "readTime": "X мин", "content": "<h2>Заголовок</h2><p>Текст</p>"}"""
 
-    user_prompt = f"""Напиши SEO-оптимизированную статью на тему: "{topic}"
+    user_prompt = f"""Напиши SEO-статью на тему: "{topic}"
 Категория: {category}
-Статья должна быть 1500-2000 слов.
-Включи: введение, 3-5 основных разделов с подзаголовками, практические советы, заключение."""
+Объём: 800-1200 слов.
+Включи: введение, 3-4 раздела с h2/h3 заголовками, советы, заключение.
+Ответ ТОЛЬКО JSON!"""
 
-    if client and HAS_OPENAI:
-        try:
-            response = client.chat.completions.create(
-                model=model,
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt}
-                ],
-                response_format={"type": "json_object"},
-                temperature=0.7,
-                max_tokens=4000
-            )
-            return json.loads(response.choices[0].message.content)
-        except Exception as e:
-            print(f"AI API Error: {e}")
-            return generate_fallback_article(topic, category)
-    else:
+    data = {
+        "model": "grok-beta",
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ],
+        "temperature": 0.7,
+        "max_tokens": 4000
+    }
+    
+    try:
+        response = requests.post(
+            "https://api.x.ai/v1/chat/completions",
+            headers=headers,
+            json=data,
+            timeout=120
+        )
+        response.raise_for_status()
+        
+        result = response.json()
+        content = result["choices"][0]["message"]["content"]
+        
+        # Очистка от возможных markdown блоков
+        content = content.strip()
+        if content.startswith("```"):
+            content = content.split("```")[1]
+            if content.startswith("json"):
+                content = content[4:]
+        content = content.strip()
+        
+        return json.loads(content)
+        
+    except requests.exceptions.RequestException as e:
+        print(f"❌ API Error: {e}")
+        return generate_fallback_article(topic, category)
+    except json.JSONDecodeError as e:
+        print(f"❌ JSON Parse Error: {e}")
+        print(f"Response: {content[:500] if 'content' in dir() else 'N/A'}")
+        return generate_fallback_article(topic, category)
+    except Exception as e:
+        print(f"❌ Error: {e}")
         return generate_fallback_article(topic, category)
 
 
@@ -159,46 +164,48 @@ def generate_fallback_article(topic: str, category: str) -> dict:
     category_labels = {
         "telegram-ads": "Telegram Ads",
         "mini-apps": "Mini Apps", 
-        "traffic": "трафике",
-        "cases": "кейсах",
-        "guides": "гайдах"
+        "traffic": "трафике в Telegram",
+        "cases": "успешных кейсах",
+        "guides": "продвижении в Telegram"
     }
+    
+    cat_label = category_labels.get(category, 'рекламе в Telegram')
     
     return {
         "title": topic,
-        "excerpt": f"Подробная статья о {category_labels.get(category, 'рекламе в Telegram')}. Разбираем ключевые аспекты, делимся практическими советами и реальными примерами.",
-        "readTime": f"{random.randint(5, 15)} мин",
-        "content": f"""
-<h2>Введение</h2>
-<p>В этой статье мы подробно разберём тему: {topic}. Вы узнаете ключевые стратегии, практические советы и реальные примеры.</p>
+        "excerpt": f"Подробная статья о {cat_label}. Разбираем ключевые аспекты, делимся практическими советами и реальными примерами от команды TRAFFY.",
+        "readTime": f"{random.randint(5, 12)} мин",
+        "content": f"""<h2>Введение</h2>
+<p>В этой статье мы подробно разберём тему: <strong>{topic}</strong>. Вы узнаете ключевые стратегии, практические советы и реальные примеры от экспертов TRAFFY.</p>
 
-<h2>Почему это важно</h2>
-<p>Telegram продолжает расти как платформа для бизнеса. В 2025 году здесь сосредоточена огромная аудитория, готовая к взаимодействию с брендами.</p>
+<h2>Почему это важно в 2025 году</h2>
+<p>Telegram продолжает стремительно расти как платформа для бизнеса. Аудитория мессенджера превысила 900 миллионов пользователей, и значительная часть из них активно взаимодействует с каналами, ботами и Mini Apps.</p>
+<p>Для маркетологов и предпринимателей это открывает огромные возможности для привлечения клиентов и монетизации.</p>
 
 <h2>Основные стратегии</h2>
 <ul>
-<li>Определите свою целевую аудиторию</li>
-<li>Создайте качественный контент</li>
-<li>Тестируйте разные подходы</li>
-<li>Анализируйте результаты</li>
+<li><strong>Определите целевую аудиторию</strong> — чётко понимайте, кого вы хотите привлечь</li>
+<li><strong>Создавайте качественный контент</strong> — это основа органического роста</li>
+<li><strong>Тестируйте разные подходы</strong> — A/B тестирование поможет найти лучшее решение</li>
+<li><strong>Анализируйте метрики</strong> — без данных невозможно оптимизировать результаты</li>
 </ul>
 
-<h2>Практические советы</h2>
-<p>Начните с малого бюджета и постепенно масштабируйте успешные кампании. Регулярно анализируйте метрики и оптимизируйте стратегию.</p>
+<h2>Практические советы от TRAFFY</h2>
+<p>Начните с небольшого бюджета и постепенно масштабируйте успешные кампании. Мы рекомендуем выделить минимум 2 недели на тестирование гипотез перед запуском основной кампании.</p>
+<p>Регулярно анализируйте метрики: CTR, конверсию, стоимость привлечения. Эти данные помогут оптимизировать рекламный бюджет.</p>
 
 <blockquote>
-<p>«Ключ к успеху в Telegram — это понимание своей аудитории и постоянное тестирование гипотез.»</p>
+<p>«Ключ к успеху в Telegram — это понимание своей аудитории и постоянное тестирование гипотез. Не бойтесь экспериментировать!»<br>— Команда TRAFFY</p>
 </blockquote>
 
 <h2>Заключение</h2>
-<p>Если у вас остались вопросы или нужна помощь с продвижением — обращайтесь к команде TRAFFY. Мы поможем достичь ваших целей!</p>
-"""
+<p>Telegram предоставляет уникальные возможности для бизнеса. Используйте их правильно, и результаты не заставят себя ждать.</p>
+<p>Если у вас остались вопросы или нужна помощь с продвижением — обращайтесь к команде TRAFFY. Мы поможем достичь ваших целей!</p>"""
     }
 
 
 def generate_article_id(title: str) -> str:
-    """Генерация уникального ID статьи из заголовка"""
-    # Транслитерация и очистка
+    """Генерация уникального ID статьи"""
     translit = {
         'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e',
         'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm',
@@ -211,13 +218,11 @@ def generate_article_id(title: str) -> str:
     for ru, en in translit.items():
         result = result.replace(ru, en)
     
-    # Оставляем только буквы, цифры и пробелы, заменяем пробелы на дефисы
     result = ''.join(c if c.isalnum() or c == ' ' else '' for c in result)
     result = '-'.join(result.split())
     
-    # Добавляем дату для уникальности
-    date_suffix = datetime.now().strftime("%Y%m%d")
-    return f"{result[:50]}-{date_suffix}"
+    date_suffix = datetime.now().strftime("%Y%m%d-%H%M")
+    return f"{result[:40]}-{date_suffix}"
 
 
 def load_existing_articles() -> list:
@@ -229,16 +234,16 @@ def load_existing_articles() -> list:
 
 
 def save_articles(articles: list):
-    """Сохранение статей в JSON"""
+    """Сохранение статей"""
+    ARTICLES_DIR.mkdir(parents=True, exist_ok=True)
     with open(ARTICLES_JSON, 'w', encoding='utf-8') as f:
         json.dump(articles, f, ensure_ascii=False, indent=2)
 
 
 def get_unused_topic(existing_articles: list) -> tuple:
-    """Получить тему, которая ещё не использовалась"""
+    """Получить неиспользованную тему"""
     existing_titles = {a['title'].lower() for a in existing_articles}
     
-    # Перемешиваем категории и темы
     all_topics = []
     for cat_data in TOPICS:
         for topic in cat_data['topics']:
@@ -250,27 +255,28 @@ def get_unused_topic(existing_articles: list) -> tuple:
         if topic.lower() not in existing_titles:
             return category, topic
     
-    # Если все темы использованы - выбираем случайную
+    # Если все использованы — добавляем год
     category, topic = random.choice(all_topics)
-    return category, f"{topic} (обновление {datetime.now().year})"
+    return category, f"{topic} — обновление {datetime.now().year}"
 
 
 def main():
-    """Основная функция генерации статьи"""
+    """Основная функция"""
     print("🦋 TRAFFY Article Generator")
     print("=" * 40)
     
-    # Загружаем существующие статьи
+    # Загружаем статьи
     articles = load_existing_articles()
     print(f"📚 Существующих статей: {len(articles)}")
     
     # Выбираем тему
     category, topic = get_unused_topic(articles)
-    print(f"📝 Генерируем статью: {topic}")
+    print(f"📝 Тема: {topic}")
     print(f"📁 Категория: {category}")
     
-    # Генерируем контент
-    content = generate_article_content(topic, category)
+    # Генерируем
+    print("🤖 Генерация через Grok API...")
+    content = generate_with_grok(topic, category)
     
     # Создаём статью
     article_id = generate_article_id(content['title'])
@@ -284,13 +290,14 @@ def main():
         "content": f"{article_id}.html"
     }
     
-    # Сохраняем HTML контент статьи
-    article_html_path = ARTICLES_DIR / f"{article_id}.html"
-    with open(article_html_path, 'w', encoding='utf-8') as f:
+    # Сохраняем HTML
+    article_html = ARTICLES_DIR / f"{article_id}.html"
+    with open(article_html, 'w', encoding='utf-8') as f:
         f.write(content.get('content', ''))
+    print(f"💾 HTML сохранён: {article_html.name}")
     
-    # Добавляем в список и сохраняем
-    articles.insert(0, new_article)  # Новая статья в начало
+    # Добавляем в список
+    articles.insert(0, new_article)
     save_articles(articles)
     
     print(f"✅ Статья создана: {new_article['title']}")
@@ -299,4 +306,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
