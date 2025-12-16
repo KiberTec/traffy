@@ -430,6 +430,26 @@
     color: inherit;
 }
 
+.article-cta-inline {
+    margin-top: 48px;
+    padding: 24px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.article-cta-inline p {
+    color: var(--white) !important;
+    margin: 0 !important;
+    font-size: 18px;
+}
+
+.article-cta-inline a {
+    color: var(--white);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
 /* No Articles */
 .no-articles {
     grid-column: 1 / -1;

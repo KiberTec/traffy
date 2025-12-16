@@ -72,7 +72,7 @@ function displayArticles(append = false) {
 // ===== Create Article Card =====
 function createArticleCard(article, featured = false) {
     const card = document.createElement('article');
-    card.className = `article-card${featured ? ' featured' : ''} animate-element`;
+    card.className = `article-card animate-element`; // All cards same size
     card.dataset.category = article.category;
     
     const categoryLabels = {

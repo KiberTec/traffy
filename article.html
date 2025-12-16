@@ -172,6 +172,17 @@
                     year: 'numeric' 
                 });
                 
+                // Load article HTML content
+                let articleHtml = '';
+                try {
+                    const contentResponse = await fetch(`articles/${article.content}`);
+                    if (contentResponse.ok) {
+                        articleHtml = await contentResponse.text();
+                    }
+                } catch (e) {
+                    console.log('Could not load article content');
+                }
+                
                 // Display article
                 const contentEl = document.getElementById('article-content');
                 contentEl.innerHTML = `
@@ -192,21 +203,11 @@
                     </div>
                     
                     <div class="article-page-content">
-                        <p>Статья в разработке. Скоро здесь появится полезный контент о ${categoryLabels[article.category] || 'рекламе в Telegram'}.</p>
-                        
-                        <h2>Что вы узнаете из этой статьи</h2>
-                        <ul>
-                            <li>Актуальные тренды и стратегии</li>
-                            <li>Пошаговые инструкции</li>
-                            <li>Реальные примеры и кейсы</li>
-                            <li>Советы от экспертов TRAFFY</li>
-                        </ul>
-                        
-                        <blockquote>
-                            <p>«Мы постоянно работаем над созданием качественного контента для наших читателей. Подпишитесь на наш канал, чтобы не пропустить новые статьи!»</p>
-                        </blockquote>
-                        
-                        <p>Если у вас есть вопросы по теме статьи или вы хотите получить консультацию — свяжитесь с нами через форму на сайте или напишите в Telegram.</p>
+                        ${articleHtml || '<p>Загрузка контента...</p>'}
+                    </div>
+                    
+                    <div class="article-cta-inline">
+                        <p>Нужна помощь с продвижением в Telegram? <a href="https://t.me/Traffy_robot" target="_blank">Напишите нам →</a></p>
                     </div>
                 `;
                 
