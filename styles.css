@@ -271,6 +271,28 @@ button {
     gap: 16px;
 }
 
+.nav-cta-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vpn-hint {
+    font-size: 11px;
+    color: var(--gray-500);
+    background: var(--gray-100);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    cursor: help;
+    white-space: nowrap;
+    transition: var(--transition-base);
+}
+
+.vpn-hint:hover {
+    background: var(--primary-100);
+    color: var(--primary-700);
+}
+
 .burger {
     display: none;
     flex-direction: column;
