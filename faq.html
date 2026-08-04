@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+
+<!--
+  ============================================================================
+  TRAFFY — База знаний для рекламодателей (покупателей трафика)
+  Самодостаточная страница: весь CSS и JS внутри файла.
+
+  ПЕРЕД ПУБЛИКАЦИЕЙ СВЕРИТЬ (поиск по файлу):
+    @Traffy_robot        — юзернейм основного бота
+    @traffy_support      — юзернейм поддержки
+    1.3₽ / 2₽            — минимальные цены (блок «Сколько стоит»)
+    24 часа              — срок модерации
+    Способы пополнения   — блок «Как пополнить баланс»
+    ≈10₽                 — Premium + пол + возраст (блок #premium-economics)
+    от 100 ₽             — минимальный заказ (обложка и #how-to-buy, #vs-market)
+    30–150₽ / от 50₽     — рыночные цены посевов и Telegram Ads (блок #vs-market)
+    от 100₽              — цена подписчика в финансовой нише (#premium-economics)
+    1000+                — количество приложений в сети
+  ТЕРМИНОЛОГИЯ: источники трафика называем «приложениями» / «источниками»,
+  а не «ботами» — чтобы не путать с накруткой. Слово «бот» оставлено только
+  там, где речь о продукте самого клиента и о технике (токен, @BotFather).
+  Список источников: 10 из 12 совпадают с примерами SubGram — заменить
+  на собственных партнёров, иначе видно копипаст (блок #sources).
+  ============================================================================
+-->
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TRAFFY — База знаний для рекламодателей</title>
+<meta content="Как покупать мотивированный трафик в Telegram через TRAFFY: запуск заказа, таргетинг, цены, учёт отписок, антифрод, статистика и API." name="description"/>
+<link rel="canonical" href="https://traffy-robot.ru/faq.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://traffy-robot.ru/faq.html"/>
+<meta property="og:title" content="TRAFFY — База знаний для рекламодателей"/>
+<meta property="og:description" content="Как покупать мотивированный трафик в Telegram: запуск заказа, таргетинг, цены, учёт отписок, антифрод, статистика и API."/>
+<meta property="og:image" content="https://traffy-robot.ru/photo-traffy.jpeg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<style>
+:root{
+  --bg:#f6f7f9; --bg-elev:#ffffff; --bg-soft:#eef0f4;
+  --text:#12141a; --text-dim:#5a6070; --text-mute:#8b91a0;
+  --border:#e2e5ec; --border-strong:#cfd4de;
+  --accent:#5b5bd6; --accent-soft:#ececfb; --accent-text:#4a4ac4;
+  --ok:#0f9d58; --ok-soft:#e6f4ec;
+  --warn:#c77700; --warn-soft:#fdf3e2;
+  --danger:#d13b3b; --danger-soft:#fdecec;
+  --shadow:0 1px 2px rgba(16,20,30,.05), 0 8px 24px rgba(16,20,30,.06);
+  --radius:14px;
+}
+html[data-theme="dark"]{
+  --bg:#0d0f14; --bg-elev:#151821; --bg-soft:#1c2029;
+  --text:#eceef4; --text-dim:#a2a9b8; --text-mute:#6e7686;
+  --border:#242936; --border-strong:#333a4a;
+  --accent:#8b8bf5; --accent-soft:#1e2038; --accent-text:#a5a5fa;
+  --ok:#3ecf8e; --ok-soft:#12281f;
+  --warn:#e0a341; --warn-soft:#2a2214;
+  --danger:#f07171; --danger-soft:#2c1717;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent-text); text-decoration:none}
+a:hover{text-decoration:underline}
+code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.88em;
+  background:var(--bg-soft); border:1px solid var(--border); border-radius:6px; padding:1px 6px;
+}
+
+/* ---------- header ---------- */
+.top{
+  position:sticky; top:0; z-index:50; backdrop-filter:blur(14px);
+  background:color-mix(in srgb, var(--bg) 82%, transparent);
+  border-bottom:1px solid var(--border);
+}
+.top-in{max-width:1180px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; gap:16px}
+.brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; letter-spacing:-.02em; color:var(--text)}
+.brand:hover{text-decoration:none}
+.brand .bf{font-size:20px}
+.top-nav{margin-left:auto; display:flex; align-items:center; gap:8px}
+.btn{
+  display:inline-flex; align-items:center; gap:7px; padding:9px 15px; border-radius:10px;
+  border:1px solid var(--border-strong); background:var(--bg-elev); color:var(--text);
+  font-size:14px; font-weight:600; cursor:pointer; transition:.15s;
+}
+.btn:hover{border-color:var(--accent); color:var(--accent-text); text-decoration:none}
+.btn-primary{background:var(--accent); border-color:var(--accent); color:#fff}
+.btn-primary:hover{opacity:.9; color:#fff}
+.btn-icon{padding:9px 11px}
+
+/* ---------- hero ---------- */
+.hero{max-width:1180px; margin:0 auto; padding:34px 24px 22px}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600;
+  color:var(--accent-text); background:var(--accent-soft); border:1px solid var(--border);
+  padding:4px 11px; border-radius:99px; margin-bottom:14px;
+}
+h1{font-size:clamp(25px,3vw,32px); line-height:1.18; letter-spacing:-.025em; margin:0 0 10px}
+.lede{font-size:16px; color:var(--text-dim); max-width:660px; margin:0}
+.hero-lvl{font-size:14px; color:var(--text-mute); margin:14px 0 0}
+.hero-lvl b{color:var(--text-dim)}
+
+/* ---------- search ---------- */
+.search-wrap{max-width:1180px; margin:0 auto; padding:8px 24px 0}
+.search{
+  display:flex; align-items:center; gap:10px; background:var(--bg-elev);
+  border:1px solid var(--border-strong); border-radius:12px; padding:12px 16px; box-shadow:var(--shadow);
+}
+.search:focus-within{border-color:var(--accent)}
+.search input{
+  flex:1; border:0; outline:0; background:transparent; color:var(--text);
+  font-size:15px; font-family:inherit;
+}
+.search svg{flex-shrink:0; opacity:.5}
+.search-hint{font-size:13px; color:var(--text-mute); padding:8px 2px 0}
+
+/* ---------- layout ---------- */
+.layout{max-width:1180px; margin:0 auto; padding:28px 24px 80px; display:grid; grid-template-columns:246px 1fr; gap:40px; align-items:start}
+.side{position:sticky; top:82px}
+.side-title{font-size:12px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--text-mute); margin:0 0 12px 12px}
+.side a{
+  display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:9px;
+  color:var(--text-dim); font-size:14.5px; font-weight:500; margin-bottom:2px;
+}
+.side a:hover{background:var(--bg-soft); color:var(--text); text-decoration:none}
+.side a.active{background:var(--accent-soft); color:var(--accent-text); font-weight:600}
+.side .n{font-size:12px; color:var(--text-mute); margin-left:auto}
+
+.side-cta{
+  margin-top:24px; padding:16px; border-radius:12px; background:var(--bg-elev);
+  border:1px solid var(--border); font-size:13.5px; color:var(--text-dim);
+}
+.side-cta b{display:block; color:var(--text); font-size:14.5px; margin-bottom:6px}
+.side-cta .btn{width:100%; justify-content:center; margin-top:12px}
+
+/* ---------- content ---------- */
+.cat{margin-bottom:44px; scroll-margin-top:88px}
+.cat-head{display:flex; align-items:baseline; gap:12px; margin:0 0 6px}
+.cat h2{font-size:25px; letter-spacing:-.02em; margin:0}
+.cat-sub{color:var(--text-dim); font-size:15px; margin:0 0 18px}
+
+.qa{
+  background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius);
+  margin-bottom:10px; overflow:hidden; scroll-margin-top:90px; transition:border-color .15s;
+}
+.qa:hover{border-color:var(--border-strong)}
+.qa[open]{border-color:var(--accent); box-shadow:var(--shadow)}
+.qa summary{
+  list-style:none; cursor:pointer; padding:17px 20px; display:flex; align-items:center; gap:12px;
+  font-size:16.5px; font-weight:600; letter-spacing:-.01em;
+}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{
+  content:""; margin-left:auto; flex-shrink:0; width:9px; height:9px; border-right:2px solid var(--text-mute);
+  border-bottom:2px solid var(--text-mute); transform:rotate(45deg) translate(-2px,-2px); transition:.2s;
+}
+.qa[open] summary::after{transform:rotate(225deg) translate(-2px,-2px); border-color:var(--accent)}
+.lvl{
+  flex-shrink:0; font-size:10.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  padding:3px 8px; border-radius:6px; border:1px solid transparent;
+}
+.lvl-start{background:var(--ok-soft); color:var(--ok); border-color:color-mix(in srgb,var(--ok) 25%,transparent)}
+.lvl-pro{background:var(--accent-soft); color:var(--accent-text); border-color:color-mix(in srgb,var(--accent) 25%,transparent)}
+.qa-body{padding:2px 20px 20px; color:var(--text-dim); font-size:15.3px}
+.qa-body > :first-child{margin-top:0}
+.qa-body > :last-child{margin-bottom:0}
+.qa-body strong{color:var(--text); font-weight:650}
+.qa-body h4{color:var(--text); font-size:15.5px; margin:22px 0 8px}
+.qa-body ul,.qa-body ol{padding-left:22px; margin:10px 0}
+.qa-body li{margin-bottom:7px}
+.qa-body li::marker{color:var(--text-mute)}
+
+/* tables */
+.tw{overflow-x:auto; margin:14px 0; border:1px solid var(--border); border-radius:10px}
+table{border-collapse:collapse; width:100%; font-size:14.3px; min-width:440px}
+th,td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--border); vertical-align:top}
+th{background:var(--bg-soft); color:var(--text); font-weight:650; font-size:13px; white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td b{color:var(--text)}
+
+/* callouts */
+.note{
+  border-left:3px solid var(--accent); background:var(--accent-soft);
+  padding:12px 16px; border-radius:0 10px 10px 0; margin:14px 0; font-size:14.6px;
+}
+.note.ok{border-color:var(--ok); background:var(--ok-soft)}
+.note.warn{border-color:var(--warn); background:var(--warn-soft)}
+.note.bad{border-color:var(--danger); background:var(--danger-soft)}
+.note b:first-child{display:block; margin-bottom:4px; color:var(--text)}
+
+.steps{counter-reset:s; list-style:none; padding:0; margin:14px 0}
+.steps li{counter-increment:s; position:relative; padding-left:38px; margin-bottom:14px}
+.steps li::before{
+  content:counter(s); position:absolute; left:0; top:1px; width:25px; height:25px;
+  border-radius:8px; background:var(--accent-soft); color:var(--accent-text);
+  font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center;
+}
+.steps li b{color:var(--text)}
+
+/* value cards */
+.vals{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; margin:0 0 22px}
+.val{
+  background:var(--bg-elev); border:1px solid var(--border); border-radius:12px; padding:16px 18px;
+}
+.val .big{font-size:27px; font-weight:750; letter-spacing:-.03em; color:var(--accent-text); line-height:1.15}
+.val .cap{font-size:13.5px; color:var(--text-dim); margin-top:5px}
+.hl{
+  background:linear-gradient(180deg, transparent 62%, var(--accent-soft) 62%);
+  padding:0 2px; font-weight:650; color:var(--text);
+}
+.calc{
+  background:var(--bg-soft); border:1px solid var(--border); border-radius:12px;
+  padding:16px 18px; margin:14px 0; font-size:14.8px;
+}
+.calc-row{display:flex; gap:12px; padding:7px 0; border-bottom:1px dashed var(--border)}
+.calc-row:last-child{border-bottom:0; padding-top:12px; font-weight:700; color:var(--text); font-size:16px}
+.calc-row span:last-child{margin-left:auto; white-space:nowrap; font-variant-numeric:tabular-nums}
+
+.chips{display:flex; flex-wrap:wrap; gap:7px; margin:12px 0}
+.chip{
+  font-size:13px; padding:5px 11px; border-radius:8px; background:var(--bg-soft);
+  border:1px solid var(--border); color:var(--text-dim);
+}
+
+/* footer */
+.foot{border-top:1px solid var(--border); background:var(--bg-elev)}
+.foot-in{max-width:1180px; margin:0 auto; padding:32px 24px; display:flex; flex-wrap:wrap; gap:20px; align-items:center; font-size:14px; color:var(--text-dim)}
+.foot-in .btn{margin-left:auto}
+
+.empty{display:none; text-align:center; padding:60px 20px; color:var(--text-mute)}
+.empty.on{display:block}
+
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr; gap:24px}
+  .side{position:static; display:flex; gap:6px; overflow-x:auto; padding-bottom:6px}
+  .side-title,.side-cta,.side .n{display:none}
+  .side a{white-space:nowrap; background:var(--bg-elev); border:1px solid var(--border)}
+  .hero{padding:36px 20px 24px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="top-in">
+<a class="brand" href="/index.html"><span class="bf">🦋</span> TRAFFY</a>
+<nav class="top-nav">
+<button aria-label="Сменить тему" class="btn btn-icon" id="theme" title="Сменить тему">🌙</button>
+<a class="btn" href="https://t.me/traffy_support">Поддержка</a>
+<a class="btn btn-primary" href="https://t.me/Traffy_robot">Перейти в сервис</a>
+</nav>
+</div>
+</header>
+<section class="hero">
+<span class="eyebrow">📘 База знаний · Рекламодателям</span>
+<h1>Как покупать трафик в TRAFFY</h1>
+<p class="lede">Документация для клиентов: запуск заказа, таргетинг и цены, учёт отписок, контроль качества, статистика и API.</p>
+<p class="hero-lvl">34 разбора по шагам. <b>Старт</b> — если покупаете ОП впервые, <b>Про</b> — если оптимизируете связки. Не хотите разбираться сами — <a href="#done-for-you">настроим за вас</a>.</p>
+</section>
+<div class="search-wrap">
+<div class="search">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+<input autocomplete="off" id="q" placeholder="Поиск по базе знаний — например «отписки» или «коэффициент»" type="search"/>
+</div>
+<p class="search-hint">Совет: любой вопрос можно открыть прямой ссылкой — кликните по нему и скопируйте адрес из строки браузера.</p>
+</div>
+<div class="layout">
+<aside class="side" id="side">
+<p class="side-title">Разделы</p>
+<a class="active" href="#profit">Зачем это вам<span class="n">4</span></a>
+<a href="#basics">Основы<span class="n">6</span></a>
+<a href="#launch">Запуск заказа<span class="n">8</span></a>
+<a href="#targeting">Таргетинг и цена<span class="n">5</span></a>
+<a href="#quality">Качество и возвраты<span class="n">5</span></a>
+<a href="#analytics">Аналитика и API<span class="n">4</span></a>
+<a href="#problems">Решение проблем<span class="n">3</span></a>
+<div class="side-cta">
+<b>Не нашли ответ?</b>
+      Поддержка отвечает в Telegram — обычно в течение 15 минут.
+      <a class="btn" href="https://t.me/traffy_support">Написать в поддержку</a>
+</div>
+</aside>
+<main id="main">
+<!-- ================= ВЫГОДА ================= -->
+<section class="cat" id="profit">
+<div class="cat-head"><h2>Зачем это вам</h2></div>
+<p class="cat-sub">Экономика вопроса: сколько вы экономите и что получаете сверх подписчиков.</p>
+<div class="vals">
+<div class="val"><div class="big">от 2 ₽</div><div class="cap">подписчик в канал против 30–150 ₽ на посевах</div></div>
+<div class="val"><div class="big">≈ 10 ₽</div><div class="cap">Premium-подписчик с таргетом по полу и возрасту</div></div>
+<div class="val"><div class="big">1000+</div><div class="cap">приложений в сети — объёмы от 300 до сотен тысяч</div></div>
+
+</div>
+<details class="qa" id="premium-economics" open="">
+<summary><span class="lvl lvl-start">Старт</span> Как забрать платёжеспособную ЦА в 10 раз дешевле рынка</summary>
+<div class="qa-body">
+<p>Самая выгодная схема в TRAFFY — <strong>покупать Premium-трафик на дорогие ниши</strong>. Логика простая: чем дороже подписчик в вашей тематике на открытом рынке, тем больше вы выигрываете, забирая его у нас.</p>
+<h4>Почему Premium — это готовый фильтр платёжеспособности</h4>
+<p>Telegram Premium — это человек, который <strong>уже достал карту и оплатил подписку</strong>. Он не просто «активный пользователь» — он доказал, что платит за цифровые продукты. Ни один другой фильтр не даёт такого качественного отсева за такие деньги.</p>
+<h4>Пример: канал про экономику и финансы</h4>
+<p>Подписчик в финансовой нише — один из самых дорогих в Telegram. На посевах в тематических каналах он обходится <span class="hl">от 100 ₽ и выше</span>, потому что за эту аудиторию конкурируют банки, брокеры и инфобизнес.</p>
+<p>В TRAFFY вы собираете ту же аудиторию настройкой из трёх параметров:</p>
+<div class="calc">
+<div class="calc-row"><span>Только Telegram Premium</span><span>платёжеспособный</span></div>
+<div class="calc-row"><span>Мужская аудитория</span><span>ядро ниши</span></div>
+<div class="calc-row"><span>Возраст 25 и старше</span><span>есть свободные деньги</span></div>
+<div class="calc-row"><span>Итого за подписчика</span><span>≈ 10 ₽</span></div>
+</div>
+<p>Это <strong>та же самая целевая аудитория</strong> — только в десять раз дешевле. Разница в том, что на посевах вы платите за место в чужом канале и надеетесь на отклик, а у нас — за конкретного человека с заданными характеристиками.</p>
+<div class="note ok"><b>Где это работает лучше всего</b>Ниши с дорогим подписчиком: финансы и экономика, инвестиции, криптовалюта, бизнес, недвижимость, автомобили, премиальные товары и услуги. Чем выше рыночная цена подписчика — тем больше ваш выигрыш в абсолютных деньгах.</div>
+<div class="note"><b>Считайте по-честному</b>Мотив-подписчик менее лоялен, чем пришедший с тематического посева — мы это <a href="#fit">не скрываем</a>. Но при разнице в цене в десять раз вы можете позволить себе заметно худшее удержание и всё равно остаться в сильном плюсе. Сравнивайте стоимость целевого действия, а не стоимость подписки.</div>
+</div>
+</details>
+<details class="qa" id="vs-market">
+<summary><span class="lvl lvl-start">Старт</span> Мотив, посевы и Telegram Ads: что выбрать</summary>
+<div class="qa-body">
+<p>Это три разных инструмента, а не конкуренты. Честное сравнение по параметрам, которые реально влияют на решение.</p>
+<div class="tw"><table>
+<tr><th></th><th>Мотив (TRAFFY)</th><th>Посевы в каналах</th><th>Telegram Ads</th></tr>
+<tr><td><b>Цена подписчика</b></td><td><b>от 2 ₽</b></td><td>30–150 ₽</td><td>от 50 ₽, зависит от ниши</td></tr>
+<tr><td><b>Порог входа</b></td><td><b>от 100 ₽</b></td><td>Цена размещения целиком</td><td>Высокий депозит</td></tr>
+<tr><td><b>Скорость запуска</b></td><td><b>Часы</b></td><td>Дни: поиск, переговоры, слот</td><td>Дни: модерация и настройка</td></tr>
+<tr><td><b>Предсказуемость</b></td><td><b>Задаёте точное количество</b></td><td>Лотерея: от 50 до 5000</td><td>Средняя</td></tr>
+<tr><td><b>Управление объёмом</b></td><td><b>Лимиты в час и в день</b></td><td>Нет</td><td>Через бюджет</td></tr>
+<tr><td><b>Возврат за отписки</b></td><td><b>Автоматический</b></td><td>Нет</td><td>Нет</td></tr>
+<tr><td><b>Данные о пришедших</b></td><td><b>Выгрузка ID, вебхуки</b></td><td>Нет</td><td>Нет</td></tr>
+<tr><td><b>Лояльность аудитории</b></td><td>Ниже</td><td><b>Выше</b></td><td>Выше</td></tr>
+</table></div>
+<div class="note"><b>Как это комбинируют опытные закупщики</b>Мотивом набирают объём и тестируют офферы, посевами добирают лояльное ядро. Проверить гипотезу за 500 ₽ на мотиве, а потом залить бюджет в посевы — заметно дешевле, чем сразу проверять её посевами.</div>
+</div>
+</details>
+<details class="qa" id="mau">
+<summary><span class="lvl lvl-start">Старт</span> Сервисам, VPN и Mini Apps: зачем нужен объём</summary>
+<div class="qa-body">
+<p>Если вы продвигаете сервис, VPN или Mini App, подписчики — не главное, что вы покупаете. Главное — <strong>масса пользователей и MAU</strong>. Вот что она даёт.</p>
+<h4>Топы каталогов и поиска</h4>
+<p>Каталоги приложений и Mini Apps ранжируют проекты по числу пользователей и активности. Крупная заливка трафика выталкивает вас в топ выдачи — и дальше вы начинаете получать <strong>органику бесплатно</strong>, просто за счёт позиции. Один платный залив продолжает приводить людей месяцами.</p>
+<h4>MAU как валюта переговоров</h4>
+<p>MAU — первая цифра, которую у вас спросят в любом разговоре про деньги:</p>
+<ul>
+<li><b>Рекламодатели.</b> Ставка за размещение и eCPM напрямую зависят от размера аудитории</li>
+<li><b>Партнёрства и интеграции.</b> С проектом на 10 000 MAU разговаривают иначе, чем с проектом на 500</li>
+<li><b>Листинги и гранты.</b> В экосистеме TON и Mini Apps размер аудитории — прямой критерий отбора</li>
+<li><b>Инвесторы и покупатели.</b> Проект оценивают по пользователям, а не по красоте интерфейса</li>
+</ul>
+<h4>Доверие и социальное доказательство</h4>
+<p>Человек, который видит «500 000 пользователей», ведёт себя иначе, чем пришедший в пустой сервис. Конверсия в целевое действие растёт от одного лишь масштаба — и это работает как на конечных пользователей, так и на B2B-клиентов, которые решают, доверять вам или нет.</p>
+<div class="note ok"><b>Почему VPN и утилиты — идеальный кейс</b>У них массовая, не нишевая аудитория: подходит буквально любой пользователь. Значит, можно брать <a href="#save-money">трафик без дорогих фильтров по минимальной цене</a> и заливать большими объёмами. Стоимость пользователя выходит минимальной по рынку, а эффект от MAU — максимальным.</div>
+</div>
+</details>
+<details class="qa" id="self-payback">
+<summary><span class="lvl lvl-pro">Про</span> Как трафик окупает сам себя</summary>
+<div class="qa-body">
+<p>Три механики, из-за которых реальная стоимость привлечения оказывается ниже той, что вы заплатили.</p>
+<h4>1. Перепродажа трафика через собственную ОП</h4>
+<p>Если вы покупаете пользователей в своё приложение, вы можете <strong>сами стать нашим партнёром</strong> и показывать им блок обязательной подписки. Купили пользователя за 1.3 ₽ — вернули часть или всю сумму на его же подписках, а пользователь остался вашим. При грамотной настройке трафик выходит в ноль или в плюс, а база растёт бесплатно.</p>
+<h4>2. База ID для повторных касаний</h4>
+<p>Вы выгружаете список Telegram ID всех приведённых пользователей. Один раз оплаченный пользователь дальше доступен вам <strong>неограниченное число раз</strong>: рассылки, новые офферы, реактивация, запуск нового продукта на существующую базу. С посевов и Telegram Ads вы такого списка не получите вообще.</p>
+<h4>3. Возвраты за отписки</h4>
+<p><a href="#unsub">Отписавшиеся возвращают деньги на баланс автоматически</a>. Вы платите только за тех, кто остался — фактическая цена удержанного подписчика равна номинальной, а не выше неё, как в любом другом канале закупки.</p>
+<div class="note"><b>Итоговая формула</b>Цена привлечения минус доход от собственной ОП минус возвраты за отписки, поделённая на количество повторных касаний по базе. Именно эту цифру имеет смысл сравнивать с посевами — а не сырую цену за подписку.</div>
+</div>
+</details>
+</section>
+<!-- ================= ОСНОВЫ ================= -->
+<section class="cat" id="basics">
+<div class="cat-head"><h2>Основы</h2></div>
+<p class="cat-sub">Что вы покупаете, откуда это берётся и кому подходит.</p>
+<details class="qa" id="what-is-motivated">
+<summary><span class="lvl lvl-start">Старт</span> Что такое мотивированный трафик</summary>
+<div class="qa-body">
+<p>Мотивированный трафик — это <strong>живые пользователи Telegram</strong>, которые подписываются на ваш ресурс, чтобы получить что-то полезное в приложении-партнёре: скачать музыку или видео, задать вопрос нейросети, решить домашнее задание, получить звёзды или игровой бонус.</p>
+<h4>Как это выглядит изнутри</h4>
+<ol class="steps">
+<li><b>Запрос.</b> Пользователь заходит в приложение нашей партнёрской сети и просит контент — например, скачать ролик из TikTok.</li>
+<li><b>Условие.</b> Приложение показывает блок обязательной подписки (ОП) — от 1 до 10 спонсоров. Среди них ваш ресурс.</li>
+<li><b>Действие.</b> Пользователь подписывается и нажимает «Я выполнил». Мы проверяем подписку через официальный API Telegram.</li>
+<li><b>Результат.</b> Он получает свой контент, вы — подписчика, владелец приложения — вознаграждение.</li>
+</ol>
+<div class="note ok"><b>Ключевое отличие от накрутки</b>Это настоящие люди с настоящими аккаунтами, а не пустые фейки. Они видят ваши посты в ленте, могут читать, кликать и покупать. Накрутка — это пустые аккаунты, которые не делают ничего.</div>
+</div>
+</details>
+<details class="qa" id="is-legal">
+<summary><span class="lvl lvl-start">Старт</span> Это законно? Не забанит ли Telegram канал</summary>
+<div class="qa-body">
+<p>Да, это легально и безопасно. Формат не нарушает ни правила Telegram, ни законодательство: пользователи — реальные люди, которые подписываются добровольно и осознанно, в обмен на понятную им выгоду.</p>
+<p>Сервисы аналитики (TGStat, Telemetr и другие) не помечают такой трафик как накрутку, потому что технически это обычные вступления живых аккаунтов по пригласительной ссылке.</p>
+<div class="note warn"><b>Что действительно может навредить</b>Неестественная динамика. Если на канал с 200 подписчиками за час приходит 10 000 человек — это выглядит подозрительно для любого наблюдателя. Поэтому мы даём <a href="#speed">плавное распределение вступлений</a>: настройте скорость под размер канала, и рост будет выглядеть органично.</div>
+</div>
+</details>
+<details class="qa" id="sources">
+<summary><span class="lvl lvl-start">Старт</span> Откуда берётся трафик</summary>
+<div class="qa-body">
+<p>В базе TRAFFY <strong>более 1000 приложений</strong> самых разных тематик. Каждый даёт пользователю полезную функцию в обмен на подписки. Тематика приложения определяет, какая аудитория к вам придёт.</p>
+<div class="note ok"><b>Не верьте на слово — зайдите и посмотрите</b>В таблице ниже реальные приложения из нашей сети. Откройте любое, попробуйте им воспользоваться — и вы своими глазами увидите, как выглядит блок обязательной подписки и что делает пользователь перед тем, как попасть к вам.</div>
+<div class="tw"><table>
+<tr><th>Тематика</th><th>Пример приложения</th><th>Что получает пользователь</th><th>Кто это</th></tr>
+<tr><td><b>Нейросети и ИИ</b></td><td><a href="https://t.me/chatgpt_web_gobot">@chatgpt_web_gobot</a></td><td>Доступ к нейросетям и генерации изображений</td><td>18–35, платёжеспособная, интерес к технологиям</td></tr>
+<tr><td><b>ГДЗ и учёба</b></td><td><a href="https://t.me/reshebnick_robot">@reshebnick_robot</a></td><td>Решение домашних заданий нейросетью</td><td>Школьники и студенты, 14–22</td></tr>
+<tr><td><b>Звёзды и NFT</b></td><td><a href="https://t.me/StarsovEarnBot">@StarsovEarnBot</a></td><td>Telegram Stars, подарки</td><td>Активные в экосистеме Telegram, крипто-интерес</td></tr>
+<tr><td><b>Музыка</b></td><td><a href="https://t.me/smusic2bot">@smusic2bot</a></td><td>Поиск и скачивание треков</td><td>Максимально широкая, все возрасты</td></tr>
+<tr><td><b>Скачивалки</b></td><td><a href="https://t.me/TTPLUSBot">@TTPLUSBot</a></td><td>Видео из TikTok, YouTube, Instagram</td><td>Широкая, преимущественно мобильная</td></tr>
+<tr><td><b>Кино и сериалы</b></td><td><a href="https://t.me/cinemaking_bot">@cinemaking_bot</a></td><td>Поиск и скачивание фильмов</td><td>Широкая, 20–45</td></tr>
+<tr><td><b>Приложения и APK</b></td><td><a href="https://t.me/Skladapkbot">@Skladapkbot</a></td><td>APK, моды, скрипты</td><td>Android-аудитория, 16–30</td></tr>
+<tr><td><b>Общение</b></td><td><a href="https://t.me/SecretChat4uBot">@SecretChat4uBot</a></td><td>Анонимные чаты, знакомства</td><td>Молодая, высокая активность</td></tr>
+<tr><td><b>Инструменты</b></td><td><a href="https://t.me/linkify_getlink_bot">@linkify_getlink_bot</a></td><td>Сокращение ссылок, конвертация, озвучка</td><td>Смешанная, много самозанятых и админов</td></tr>
+<tr><td><b>Развлечения и игры</b></td><td><a href="https://t.me/gminesbot">@gminesbot</a></td><td>Мини-игры и головоломки</td><td>Молодая, 16–28</td></tr>
+<tr><td><b>Стикеры и темы</b></td><td><a href="https://t.me/my_themes_bot">@my_themes_bot</a></td><td>Стикеры, шрифты и темы оформления Telegram</td><td>Молодая, много девушек</td></tr>
+<tr><td><b>Заработок</b></td><td><a href="https://t.me/getcash_robot">@getcash_robot</a></td><td>Денежное вознаграждение за действие</td><td>Самая дешёвая и самая холодная аудитория</td></tr>
+</table></div>
+<p>Такой объём сети означает, что мы закрываем практически любые объёмы — от теста на 300 подписчиков до сотен тысяч, без просадки по скорости.</p>
+<div class="note"><b>Как этим управлять</b>Вы можете <a href="#blacklist">исключить нежелательные тематики и конкретные источники</a> из своей кампании. Это главный рычаг качества: часто достаточно отключить 2–3 худших источника, чтобы кампания заиграла.</div>
+</div>
+</details>
+<details class="qa" id="fit">
+<summary><span class="lvl lvl-start">Старт</span> Кому подходит мотив-трафик, а кому нет</summary>
+<div class="qa-body">
+<p>Мы говорим честно: мотив — это не универсальное решение. Он выигрывает ценой и объёмом, а не глубиной вовлечения.</p>
+<h4>Работает отлично</h4>
+<ul>
+<li>Быстрый набор первых подписчиков в новый канал — соцдоказательство, чтобы органика не приходила в пустоту</li>
+<li>Набор пользователей в Telegram-бота</li>
+<li>Увеличение запусков Telegram Mini App</li>
+<li>Тестирование воронки и проверка оффера — дёшево и быстро получить объём и увидеть, работает ли гипотеза</li>
+<li>Создание первичной базы для последующих рассылок и прогрева контентом</li>
+<li>Разгон канала перед посевами или продажей</li>
+<li>Продукты с широкой ЦА: развлечения, новости, скидки, крипта, гейминг</li>
+<li>Проекты, где важна метрика «количество зарегистрированных»</li>
+</ul>
+<h4>Работает хуже</h4>
+<ul>
+<li>Узкие B2B-ниши с высоким чеком</li>
+<li>Продукты, где нужен горячий лид сразу, без прогрева</li>
+<li>Каналы, чья монетизация построена только на охвате первого часа после поста</li>
+</ul>
+<div class="note warn"><b>Говорим честно</b>Мотивированный подписчик не всегда равен лояльной аудитории. Человек подписался не потому, что изначально хотел читать ваш канал, а потому что хотел получить доступ к функции или бонусу. <strong>Результат зависит не только от трафика, но и от того, куда вы его ведёте и какие таргеты настроили.</strong> Пустой или невнятный канал часть людей покинет быстро. Канал с понятной ценностью удержит.</div>
+<div class="note ok"><b>Как это работает у наших клиентов</b>Экономический канал-миллионник берёт у нас мужскую аудиторию с Telegram Premium. Это платёжеспособные люди, которые и есть его целевая аудитория — они остаются и читают канал дальше. Работает не «мотив вообще», а мотив с правильно выставленным таргетом под конкретный продукт.</div>
+<div class="note"><b>Правильная стратегия</b>Не «мотив вместо посевов», а «мотив как дешёвая верхушка воронки + контент, который удерживает». Средний ER у мотив-подписчика ниже, чем у подписчика с тематического посева — но и стоит он в разы дешевле. Считайте не цену подписчика, а цену целевого действия.</div>
+</div>
+</details>
+<details class="qa" id="order-types">
+<summary><span class="lvl lvl-start">Старт</span> Какие бывают типы заказов</summary>
+<div class="qa-body">
+<p>Тип заказа определяет, что именно мы считаем выполненным действием и как его проверяем.</p>
+<div class="tw"><table>
+<tr><th>Тип</th><th>Целевое действие</th><th>Что нужно от вас</th><th>Проверка</th></tr>
+<tr><td><b>Канал / чат</b></td><td>Подписка</td><td>Пригласительная ссылка + наш бот в администраторах</td><td>Да, через API Telegram. Доступен учёт отписок</td></tr>
+<tr><td><b>Канал / чат на заявки</b></td><td>Заявка на вступление</td><td>Ссылка с одобрением администратора</td><td>Да, фиксируется факт заявки</td></tr>
+<tr><td><b>Бот</b></td><td>Запуск бота (<code>/start</code>)</td><td>Токен бота или код BotMembers</td><td>Да, проверяем уникальный запуск. <a href="#bot-check">Можно и без проверки</a></td></tr>
+<tr><td><b>Ресурс без проверки</b></td><td>Переход по ссылке</td><td>Любая ссылка <code>https://…</code></td><td>Нет — работает система предположений</td></tr>
+</table></div>
+<div class="note warn"><b>Про «ресурс без проверки»</b>Этот тип нужен для внешних сайтов, лендингов и Mini App, куда мы не можем заглянуть технически. Мы показываем вашу ссылку вместе со спонсорами, у которых проверка есть, и если пользователь выполнил их условия — предполагаем, что по вашей ссылке он тоже перешёл. Совпадение с вашей внутренней аналитикой не гарантируется. <b>Всегда тестируйте такой заказ на маленьком лимите</b>, прежде чем заливать бюджет.</div>
+</div>
+</details>
+<details class="qa" id="notgetted">
+<summary><span class="lvl lvl-pro">Про</span> Что значит статус «не засчитан» (notgetted)</summary>
+<div class="qa-body">
+<p>Иногда пользователь подписан на ваш канал, но Telegram не засчитывает его как нового уникального подписчика по пригласительной ссылке. Такое бывает, если человек уже был в канале раньше и отписался: платформа помнит его и не показывает вступление в статистике ссылки.</p>
+<div class="note ok"><b>Вы за это не платите</b>В таких случаях мы <strong>не списываем деньги с вашего баланса</strong> и, соответственно, не выплачиваем владельцу приложения. Доступ к контенту пользователь получает, но в счёт заказа он не идёт.</div>
+<p>Если вы работаете через API, этот статус приходит как <code>notgetted</code> в ответе метода проверки подписок и в вебхуках.</p>
+</div>
+</details>
+</section>
+<!-- ================= ЗАПУСК ================= -->
+<section class="cat" id="launch">
+<div class="cat-head"><h2>Запуск заказа</h2></div>
+<p class="cat-sub">Пошагово: от первого входа в сервис до первых подписчиков.</p>
+<details class="qa" id="how-to-buy">
+<summary><span class="lvl lvl-start">Старт</span> Как запустить первый заказ</summary>
+<div class="qa-body">
+<div class="note ok"><b>Начните с малого</b>Минимальный заказ — от 100 ₽. Первый запуск обойдётся в считаные рубли: этого хватит, чтобы увидеть живых людей, оценить качество и только потом заводить бюджет.</div>
+<ol class="steps">
+<li><b>Откройте сервис</b> <a href="https://t.me/Traffy_robot">@Traffy_robot</a> и нажмите <code>/start</code>.</li>
+<li><b>Нажмите «Купить трафик»</b> в главном меню.</li>
+<li><b>Выберите тип ресурса:</b> Канал/чат, Бот или Ресурс без проверки. Если сомневаетесь — см. <a href="#order-types">таблицу типов заказов</a>.</li>
+<li><b>Отправьте ссылку.</b> Для канала — <a href="#invite-link">пригласительную</a> вида <code>https://t.me/+AbCdEfGhIj</code>. Для бота — <a href="#bot-token">токен или код BotMembers</a>, затем ссылку на бота. Для внешнего ресурса — любую ссылку <code>https://…</code>.</li>
+<li><b>Добавьте нашего бота в администраторы</b> канала — это нужно, чтобы отслеживать подписки и <a href="#unsub">возвращать вам деньги за отписки</a>.</li>
+<li><b>Настройте заказ:</b> количество, дневной лимит, цену, <a href="#targeting-params">таргетинг</a>, <a href="#speed">скорость и расписание</a>.</li>
+<li><b>Дождитесь модерации.</b> Обычно быстро, максимум — 24 часа.</li>
+<li><b>Запустите и следите за статистикой.</b> Первые подписчики обычно приходят в течение нескольких минут после старта.</li>
+</ol>
+<div class="note"><b>Совет на первый запуск</b>Поставьте небольшой общий лимит (300–500 подписчиков) и минимальный таргетинг. Посмотрите на качество, отсейте плохие источники — и только потом масштабируйтесь и накручивайте фильтры.</div>
+</div>
+</details>
+<details class="qa" id="done-for-you">
+<summary><span class="lvl lvl-start">Старт</span> Не хочу разбираться сам — вы настроите за меня?</summary>
+<div class="qa-body">
+<p>Да. Это не проблема и не платная опция.</p>
+<p>Напишите в <a href="https://t.me/traffy_support">@traffy_support</a>, опишите свой проект и задачу — поддержка ответит на любые вопросы, поможет запустить кампанию и <strong>сделает за вас бóльшую часть работы на старте</strong>: подберёт тип заказа, выставит адекватную цену, настроит таргетинг под ваш продукт и объяснит, на какие цифры смотреть дальше.</p>
+<h4>Что стоит написать сразу</h4>
+<ul>
+<li>Ссылка на канал, бота или Mini App, куда нужен трафик</li>
+<li>Что вы продаёте или о чём проект</li>
+<li>Кто ваша аудитория — пол, возраст, гео, если это важно</li>
+<li>Сколько подписчиков нужно и в какие сроки</li>
+<li>Примерный бюджет</li>
+</ul>
+<div class="note ok"><b>Зачем нам это</b>Кампания, настроенная наугад, сливает бюджет и оставляет плохое впечатление о мотив-трафике в целом. Нам выгоднее, чтобы ваш первый запуск сработал и вы вернулись — поэтому помощь на старте бесплатна.</div>
+</div>
+</details>
+<details class="qa" id="invite-link">
+<summary><span class="lvl lvl-start">Старт</span> Как создать пригласительную ссылку и зачем она нужна</summary>
+<div class="qa-body">
+<div class="note ok"><b>Ваша основная ссылка никуда не денется</b>Вы создаёте <strong>дополнительную</strong> ссылку, а не заменяете существующую. Канал продолжит работать как обычно.</div>
+<p>Пригласительная ссылка нужна, чтобы отделить подписчиков из TRAFFY от всех остальных. Telegram показывает статистику по каждой ссылке отдельно — так вы в любой момент можете проверить нас и увидеть точное количество пришедших именно от нас людей.</p>
+<h4>Инструкция</h4>
+<ol class="steps">
+<li>Откройте <b>настройки вашего канала или чата</b></li>
+<li>Перейдите в раздел <b>«Тип канала»</b></li>
+<li>Откройте <b>«Управление приглашениями»</b></li>
+<li>Нажмите <b>«Создать ссылку»</b></li>
+<li><b>Не устанавливайте никаких ограничений</b> — ни по количеству вступлений, ни по сроку действия. Иначе заказ остановится, когда лимит ссылки исчерпается</li>
+<li>Нажмите на три точки рядом с созданной ссылкой, скопируйте её и отправьте боту</li>
+</ol>
+<div class="note bad"><b>Частая ошибка</b>Ссылка с лимитом или сроком. Заказ будет вставать без видимой причины. Если кампания внезапно перестала набирать — проверьте ссылку первым делом.</div>
+</div>
+</details>
+<details class="qa" id="bot-check">
+<summary><span class="lvl lvl-start">Старт</span> Трафик в бота: с проверкой или без</summary>
+<div class="qa-body">
+<p>Заказ на бота можно оформить в двух режимах. Разница ровно в одном: даёте вы нам токен бота или нет.</p>
+<h4>С проверкой — гарантия объёма</h4>
+<p>Мы спрашиваем у Telegram про каждого пользователя: был он в вашем боте до показа рекламы или появился впервые. Засчитываем только тех, кто действительно нажал <code>/start</code> и раньше в боте не был.</p>
+<p><strong>Заказали 1000 запусков — получите ровно 1000.</strong> Не 940 и не 1050. Столько, сколько оплатили.</p>
+<p>Для этого нужен токен бота или <a href="#bot-token">код BotMembers</a> — без них мы физически не можем задать Telegram этот вопрос.</p>
+<h4>Без проверки — считаем клики</h4>
+<p>Если токен давать не хотите, заказ оформляется на переходы. Мы фиксируем клик по ссылке, но подтвердить, что человек дошёл до бота и нажал старт, уже не можем.</p>
+<p>Часть людей теряется по дороге: передумал, отвалился на загрузке, случайно закрыл. <strong>Обычно это 5–12%</strong> — заказали 1000, в боте оказалось 880–950.</p>
+<div class="tw"><table>
+<tr><th></th><th>С проверкой</th><th>Без проверки (клики)</th></tr>
+<tr><td><b>Что оплачиваете</b></td><td>Подтверждённый запуск бота</td><td>Переход по ссылке</td></tr>
+<tr><td><b>Гарантия объёма</b></td><td><b>100%</b></td><td>Нет, минус 5–12%</td></tr>
+<tr><td><b>Нужен токен</b></td><td>Да, или код BotMembers</td><td>Нет</td></tr>
+<tr><td><b>Когда выбирать</b></td><td>Любой рабочий объём</td><td>Быстрый тест на маленькую сумму</td></tr>
+</table></div>
+<h4>Про токен — честно</h4>
+<p>Просьба отдать токен почти всегда упирается в недоверие, и это нормальная реакция. Поэтому объясним, почему злоупотреблять им нам невыгодно.</p>
+<ul>
+<li><b>Мы работаем в долгую и на потоке.</b> У сервиса тысячи клиентов, и репутация — единственный актив в этой нише. На одном чужом боте можно заработать разово и копейки, а инцидент обнуляет бизнес целиком. Арифметика не в пользу воровства.</li>
+<li><b>Есть вариант, который снимает вопрос технически.</b> Код из <a href="https://t.me/BotMembersRobot">@BotMembersRobot</a>: токен вы отдаёте не нам, а стороннему сервису каталога <a href="https://botstat.io">botstat.io</a>, а нам приходит код, которым можно <strong>только проверить наличие пользователя</strong>. Ни читать сообщения, ни писать от вашего имени, ни менять настройки этим кодом нельзя.</li>
+<li><b>Токен отзывается в одну команду.</b> В любой момент перевыпускаете его в <a href="https://t.me/BotFather">@BotFather</a> — старый мгновенно перестаёт работать.</li>
+</ul>
+<div class="note ok"><b>Как выбрать</b>Тестируете на мелкую сумму — берите клики, это быстро и без формальностей. Как только пошёл рабочий объём — переходите на проверку. На 1000 запусках потеря 10% — это 100 человек, а на 50 000 — уже 5000. На масштабе разница ощутимая.</div>
+</div>
+</details>
+<details class="qa" id="bot-token">
+<summary><span class="lvl lvl-start">Старт</span> Где взять токен бота и что такое код BotMembers</summary>
+<div class="qa-body">
+<p>Чтобы засчитывать запуски вашего бота, нам нужно в реальном времени понимать, зашёл ли пользователь. Есть два способа дать нам такую возможность.</p>
+<h4>Вариант 1: токен от @BotFather</h4>
+<ol class="steps">
+<li>Откройте <a href="https://t.me/BotFather">@BotFather</a> — официальный бот Telegram</li>
+<li>Введите команду <code>/mybots</code></li>
+<li>Выберите нужного бота</li>
+<li>Нажмите <b>«API Token»</b> и скопируйте выданную строку</li>
+</ol>
+<h4>Вариант 2: код BotMembers</h4>
+<p>Это сервис от каталога <a href="https://botstat.io">botstat.io</a>. Вы отдаёте токен ему, а он выдаёт вам код, по которому мы можем только проверить наличие пользователя — и больше ничего.</p>
+<div class="note ok"><b>Что выбрать</b>Если вы не хотите передавать нам полный токен — берите код из <a href="https://t.me/BotMembersRobot">@BotMembersRobot</a>. Он технически не позволяет сделать с вашим ботом ничего, кроме проверки. Потребуется платная подписка BotStat Plus.</div>
+</div>
+</details>
+<details class="qa" id="prices">
+<summary><span class="lvl lvl-start">Старт</span> Сколько это стоит</summary>
+<div class="qa-body">
+<p>Вы сами назначаете цену, которую готовы платить за подписчика — но не ниже минимальной планки для вашего типа заказа.</p>
+<div class="tw"><table>
+<tr><th>Тип заказа</th><th>Минимальная цена</th><th>За что платите</th></tr>
+<tr><td>Бот</td><td><b>от 1.3 ₽</b></td><td>За уникальный запуск</td></tr>
+<tr><td>Канал / чат на заявки</td><td><b>от 1.3 ₽</b></td><td>За заявку на вступление</td></tr>
+<tr><td>Канал / чат с учётом отписок</td><td><b>от 2 ₽</b></td><td>За подписчика, который остался</td></tr>
+<tr><td>Ресурс без проверки</td><td><b>от 1.3 ₽</b></td><td>За предполагаемый переход</td></tr>
+</table></div>
+<p>Актуальную минималку для конкретно вашего заказа всегда видно в сервисе: <code>Главное меню → Мои заказы → ваш заказ → Настройки → Цена за подписчика</code>.</p>
+<div class="note warn"><b>Итоговая цена может быть выше</b>К базовой цене применяются <a href="#coefficients">коэффициенты за таргетинг</a>. Например, таргет на конкретный город умножает цену вдвое. Перед запуском сервис покажет итоговую цену с учётом всех множителей — сверяйтесь с ней, а не с базовой.</div>
+</div>
+</details>
+<details class="qa" id="topup">
+<summary><span class="lvl lvl-start">Старт</span> Как пополнить баланс</summary>
+<div class="qa-body">
+<p>Пополнение доступно прямо в сервисе: <code>Главное меню → Баланс → Пополнить</code>. Выберите сумму и удобный способ оплаты, следуйте инструкции.</p>
+<p>Деньги зачисляются на общий баланс аккаунта и списываются по мере выполнения заказов — за каждое подтверждённое целевое действие.</p>
+<div class="note ok"><b>Неизрасходованное не сгорает</b>Если вы остановили или завершили заказ, остаток средств остаётся на балансе и доступен для следующих кампаний.</div>
+</div>
+</details>
+<details class="qa" id="moderation">
+<summary><span class="lvl lvl-start">Старт</span> Модерация: сроки и причины отказа</summary>
+<div class="qa-body">
+<p>Каждый новый заказ проходит проверку. Обычно это занимает несколько минут, максимальный срок — <strong>24 часа</strong>.</p>
+<h4>Запрещено размещать</h4>
+<ul>
+<li>Скам, фишинг, кражу данных и аккаунтов</li>
+<li>Доксинг и слив персональных данных</li>
+<li>Казино и азартные игры</li>
+<li>Продажу и аренду номеров, банковских карт, аккаунтов</li>
+<li>Подделку документов, использование чужих данных</li>
+<li>Всё, что нарушает законодательство РФ: наркотики, оружие, экстремизм, пиратство, вредоносное ПО, кардинг</li>
+<li>Всё, что нарушает правила Telegram</li>
+<li>Контент 18+</li>
+<li>Накрутка и попытки обойти правила сервиса</li>
+</ul>
+<h4>Могут отклонить и по другим причинам</h4>
+<ul>
+<li>Свежесозданный или пустой канал без единого поста</li>
+<li>Ресурс, вызывающий сомнения у службы безопасности</li>
+<li>Несоответствие заявленной тематики фактическому содержанию</li>
+</ul>
+<div class="note"><b>Если заказ отклонили</b>В сервисе отобразится статус «Отклонён» и причина. Устраните её и создайте заказ заново либо напишите в <a href="https://t.me/traffy_support">поддержку</a> — разберём вручную.</div>
+<p>При первом нарушении правил выносится предупреждение, при повторных или систематических — блокировка аккаунта.</p>
+</div>
+</details>
+</section>
+<!-- ================= ТАРГЕТИНГ И ЦЕНА ================= -->
+<section class="cat" id="targeting">
+<div class="cat-head"><h2>Таргетинг и цена</h2></div>
+<p class="cat-sub">Как формируется стоимость, за что вы доплачиваете и как не переплатить.</p>
+<details class="qa" id="auction">
+<summary><span class="lvl lvl-pro">Про</span> Как формируется цена: аукцион</summary>
+<div class="qa-body">
+<p>TRAFFY работает на <strong>рыночном ценообразовании</strong>. У нас нет фиксированного прайса — есть аукцион.</p>
+<p>Когда пользователь заходит в приложение-партнёр, система в реальном времени подбирает для него подходящих спонсоров и сортирует их по выгодности. <strong>Кто платит больше — тот выше в блоке ОП</strong>, а значит получает больше подписок и набирает быстрее.</p>
+<h4>Что это значит на практике</h4>
+<ul>
+<li>Поставили минимальную цену — заказ будет набирать, но медленно и по остаточному принципу</li>
+<li>Подняли цену на 20–30% выше минимума — вы поднимаетесь в блоке и скорость резко растёт</li>
+<li>Цену можно менять на лету, не останавливая кампанию</li>
+</ul>
+<div class="note"><b>Как искать свою цену</b>Запустите на минималке, посмотрите скорость за час. Мало — поднимайте шагами по 10–15% до нужного темпа. Так вы найдёте минимальную достаточную ставку и не переплатите.</div>
+</div>
+</details>
+<details class="qa" id="targeting-params">
+<summary><span class="lvl lvl-pro">Про</span> Какие параметры таргетинга доступны</summary>
+<div class="qa-body">
+<p>Аудиторию можно сузить по трём группам признаков.</p>
+<h4>Демография и гео</h4>
+<div class="chips"><span class="chip">Пол</span><span class="chip">Возраст</span><span class="chip">Страна</span><span class="chip">Город</span><span class="chip">Язык интерфейса</span><span class="chip">Telegram Premium</span></div>
+<h4>Устройство</h4>
+<div class="chips"><span class="chip">Смартфон / планшет</span><span class="chip">Компьютер</span><span class="chip">Android</span><span class="chip">iOS</span><span class="chip">Windows</span><span class="chip">macOS</span></div>
+<h4>Качество профиля</h4>
+<div class="chips"><span class="chip">Есть фото</span><span class="chip">Реальное фото</span><span class="chip">Есть юзернейм</span><span class="chip">Есть описание</span><span class="chip">Есть имя</span><span class="chip">РУ-имя</span><span class="chip">Русское имя</span><span class="chip">Только кириллица</span><span class="chip">Возраст аккаунта</span><span class="chip">Подарки Telegram</span><span class="chip">Рейтинг профиля</span><span class="chip">Проверен на фейк</span></div>
+<h4>Чем отличаются фильтры по имени</h4>
+<div class="tw"><table>
+<tr><th>Фильтр</th><th>Что попадает</th><th>Примеры</th></tr>
+<tr><td><b>РУ имя</b></td><td>Любое имя из русскоязычного сегмента — слова, имена, кириллица и транслит</td><td>Крутыш, Олег, Kisa, alenka</td></tr>
+<tr><td><b>Русское имя</b></td><td>Именно человеческое русское имя, кириллицей или транслитом</td><td>Олег, Alenka, Masha, Григорий</td></tr>
+<tr><td><b>На кириллице</b></td><td>Имя, состоящее только из кириллических букв</td><td>Лидия, серый, человек</td></tr>
+</table></div>
+<div class="note"><b>Как мы определяем пол и возраст</b>Нейросеть анализирует фотографию профиля. Если реального фото нет — модель оценивает, какой возраст и пол характерен для такого оформления профиля. Пол дополнительно уточняется по имени, юзернейму и блоку «О себе». Гео, город, устройство и ОС мы получаем в момент, когда пользователь открывает нашу веб-страницу — см. <a href="#antifraud">антифрод</a>.</div>
+</div>
+</details>
+<details class="qa" id="coefficients">
+<summary><span class="lvl lvl-pro">Про</span> Коэффициенты: сколько стоит каждый фильтр</summary>
+<div class="qa-body">
+<p>Чем уже аудитория, тем она дороже. К вашей базовой цене применяются множители — они перемножаются между собой.</p>
+<div class="tw"><table>
+<tr><th>Параметр</th><th>Коэффициент</th></tr>
+<tr><td>Таргет по городу</td><td><b>×2</b></td></tr>
+<tr><td>Таргет по стране</td><td><b>×1.5</b></td></tr>
+<tr><td>Тип устройства</td><td><b>×1.5</b></td></tr>
+<tr><td>Операционная система</td><td><b>×1.5</b></td></tr>
+<tr><td>Возраст: младше 10 / 11–13</td><td><b>×1.2</b></td></tr>
+<tr><td>Возраст: 14–15 / 16–17</td><td><b>×1.5</b></td></tr>
+<tr><td>Возраст: 18–24</td><td><b>×2.0</b></td></tr>
+<tr><td>Возраст: 25 и старше</td><td><b>×2.5</b></td></tr>
+<tr><td>Реальное фото в профиле</td><td><b>×1.4</b></td></tr>
+<tr><td>Есть фото / юзернейм / описание / имя / РУ-имя / кириллица</td><td><b>×1.1</b> за каждый</td></tr>
+<tr><td>Возраст аккаунта: ≥2 / ≥3 / ≥5 / ≥7 / ≥9 лет</td><td><b>×1.1 … ×1.5</b></td></tr>
+<tr><td>Подарки Telegram: ≥1 / ≥10 / ≥20 / ≥50 / ≥100</td><td><b>×1.1 … ×1.5</b></td></tr>
+<tr><td>Рейтинг профиля: ≥1 / ≥2 / ≥5 / ≥7 / ≥10</td><td><b>×1.1 … ×1.5</b></td></tr>
+</table></div>
+<h4>Пример расчёта</h4>
+<p>Базовая цена <b>2.5 ₽</b>. Вы выбрали таргет на город (×2), возраст 18–24 и 25+ (средневзвешенный ×1.88) и наличие фото (×1.1).</p>
+<p>Итог: 2.5 × 2 × 1.88 × 1.1 = <b>4.13 ₽</b> за подписчика. Общий множитель — ×3.48.</p>
+<div class="note"><b>При выборе нескольких возрастных категорий</b>Применяется не максимальный коэффициент, а средневзвешенный — по доле пользователей в каждой выбранной категории. Так вы не переплачиваете за узкий сегмент, если берёте широкий.</div>
+</div>
+</details>
+<details class="qa" id="save-money">
+<summary><span class="lvl lvl-pro">Про</span> Как не переплатить за таргетинг</summary>
+<div class="qa-body">
+<p>Самая частая ошибка новичка — накрутить все фильтры сразу «чтобы наверняка». В результате цена вырастает в 5–8 раз, а скорость падает почти до нуля, потому что подходящих пользователей в системе единицы.</p>
+<h4>Порядок действий, который работает</h4>
+<ol class="steps">
+<li><b>Запустите без таргетинга</b> на 300–500 подписчиков по минимальной цене</li>
+<li><b>Посмотрите, кто пришёл</b> — в статистике видно распределение по языкам и источникам</li>
+<li><b>Отсеките мусор чёрным списком</b>, а не фильтрами. Исключить три плохих источника дешевле, чем поставить ×2 на город</li>
+<li><b>Добавляйте фильтры по одному</b> и смотрите, как меняется цена и скорость</li>
+</ol>
+<div class="note ok"><b>Дешёвые фильтры с высокой отдачей</b>«Есть юзернейм» и «есть фото» стоят всего ×1.1 каждый, но заметно отсекают пустые и брошенные аккаунты. Начинайте с них.</div>
+<div class="note bad"><b>Дорогие фильтры — только при реальной необходимости</b>Город (×2) и возраст 25+ (×2.5) дают самый сильный рост цены. Включайте их, только если ваш продукт действительно не работает без этого гео или возраста.</div>
+</div>
+</details>
+<details class="qa" id="speed">
+<summary><span class="lvl lvl-pro">Про</span> Скорость, лимиты и расписание</summary>
+<div class="qa-body">
+<p>Вы полностью управляете тем, как быстро и когда приходят люди.</p>
+<div class="tw"><table>
+<tr><th>Настройка</th><th>Что делает</th><th>Когда нужна</th></tr>
+<tr><td><b>Общее количество</b></td><td>Сколько всего подписчиков нужно</td><td>Всегда. От 10 до 10 000 000</td></tr>
+<tr><td><b>Дневной лимит</b></td><td>Потолок на сутки</td><td>Чтобы растянуть бюджет и рост</td></tr>
+<tr><td><b>Плавное распределение</b></td><td>Равномерно размазывает вступления по дню вместо залпа</td><td>Почти всегда для каналов — рост выглядит органично</td></tr>
+<tr><td><b>Скорость в час</b></td><td>Точное число вступлений в час</td><td>Когда нужен предсказуемый темп</td></tr>
+<tr><td><b>Отложенный запуск</b></td><td>Заказ стартует в заданные дату и время</td><td>Синхронизация с выходом контента или рекламы</td></tr>
+<tr><td><b>Часы показа</b></td><td>Показывать только в заданном окне, например 09:00–22:00</td><td>Если ваша ЦА активна днём</td></tr>
+<tr><td><b>Исключённые дни</b></td><td>Не крутить в выбранные дни недели</td><td>Например, отключить выходные для B2B</td></tr>
+</table></div>
+<div class="note warn"><b>Правило для молодых каналов</b>Не набирайте больше, чем текущий размер канала, за одни сутки. Канал на 500 человек не должен вырасти до 5000 за день — включите плавное распределение и дневной лимит.</div>
+</div>
+</details>
+</section>
+<!-- ================= КАЧЕСТВО ================= -->
+<section class="cat" id="quality">
+<div class="cat-head"><h2>Качество и возвраты</h2></div>
+<p class="cat-sub">Что мы делаем, чтобы вы платили только за живых людей — и как это проверить.</p>
+<details class="qa" id="unsub">
+<summary><span class="lvl lvl-pro">Про</span> Учёт отписок и возврат денег</summary>
+<div class="qa-body">
+<p>Если привлечённый пользователь отписался от вашего канала, <strong>стоимость его привлечения возвращается на ваш баланс автоматически</strong>. Вы не платите за тех, кто не остался.</p>
+<h4>Как это выглядит</h4>
+<p>У вас было 100 подписчиков по заказу. Один отписался. В статистике станет 99, а на баланс вернётся стоимость одного подписчика — например, 2 ₽. Если заказ активен, система тут же спишет эти деньги обратно и найдёт замену, чтобы восстановить сотню.</p>
+<h4>Условия возврата — все пять обязательны</h4>
+<ol class="steps">
+<li>Заказ создан с типом <b>«Канал / чат»</b></li>
+<li>При создании заказа наш бот был <b>добавлен в администраторы</b></li>
+<li>Бот <b>оставался администратором</b> весь период кампании и до конца следующей недели</li>
+<li>В настройках заказа включён пункт <b>«Учитывать отписки»</b></li>
+<li>Пользователь подписался и отписался <b>в пределах одной учётной недели</b></li>
+</ol>
+<h4>Учётный период</h4>
+<p>Подписки фиксируются <strong>с воскресенья на понедельник в 00:00 МСК</strong>, независимо от того, когда вы запустили заказ. Неделя считается с понедельника по воскресенье.</p>
+<div class="tw"><table>
+<tr><th>Ситуация</th><th>Результат</th></tr>
+<tr><td>Подписался во вторник, отписался в субботу</td><td><b>Возврат есть.</b> Одна и та же неделя</td></tr>
+<tr><td>Подписался в пятницу, отписался в среду следующей недели</td><td><b>Возврата нет.</b> Разные учётные периоды</td></tr>
+</table></div>
+<div class="note ok"><b>Как убедиться, что возвраты действительно идут</b>Поставьте на паузу <strong>все</strong> свои заказы. В этом режиме система перестанет искать новых подписчиков, но компенсация за отписки продолжит поступать. Вы увидите, как число подписчиков снижается, а сумма на балансе растёт. Проверка занимает несколько минут и не требует ничего, кроме вашего времени.</div>
+</div>
+</details>
+<details class="qa" id="antifraud">
+<summary><span class="lvl lvl-pro">Про</span> Антифрод: как мы отсекаем фейковые аккаунты</summary>
+<div class="qa-body">
+<p>Стандартный API Telegram не даёт данных, по которым можно отличить живого человека от фермы. Поэтому мы добавили собственный слой проверки.</p>
+<h4>Анкета</h4>
+<p>Веб-страница, которую пользователь проходит перед тем, как увидеть спонсоров. Формально это сбор данных — страна, город, устройство, операционная система. Фактически — ещё и получение IP-адреса и технических параметров, по которым антифрод вычисляет автоматизированные и фейковые аккаунты, а также мультиаккаунтинг.</p>
+<h4>Умный редирект</h4>
+<p>Развитие анкеты. Спонсоры подбираются не в момент запроса от приложения, а в момент, когда пользователь <strong>сам открывает ссылку</strong>. К этому моменту мы уже знаем его гео и устройство — и подбираем заказы точнее.</p>
+<h4>Проверка на фейк</h4>
+<p>Отдельный фильтр, который вы можете включить в заказе. С ним к вам приходят <strong>строго уникальные пользователи</strong> — вторые и третьи аккаунты одного человека отсеиваются.</p>
+<div class="note warn"><b>Важно про скорость</b>Фильтр «проверен на фейк» замедляет набор: чтобы проанализировать мультиаккаунты, нужно, чтобы пользователь открыл внешнюю веб-страницу, а это подключено не у всех партнёров. Включайте его, когда уникальность действительно критична.</div>
+<div class="note"><b>Если фильтр выключен — придут ли фейки?</b>Нет. Несколько аккаунтов у одного человека — обычное и не запрещённое явление в Telegram, и ограничивать его по умолчанию неправильно. Задача фильтра — не отсечь всех «вторых», а не дать недобросовестным поставщикам трафика привести на вас ботоферму. С накруткой мы боремся всегда, независимо от настроек вашего заказа.</div>
+</div>
+</details>
+<details class="qa" id="stats-mismatch">
+<summary><span class="lvl lvl-pro">Про</span> Статистика в моём боте не сходится с вашей</summary>
+<div class="qa-body">
+<p>Сначала проверьте, передавали ли вы нам токен бота или код BotMembers. Если да — мы точно проверяли факт запуска.</p>
+<div class="note"><b>Что важно понимать</b>Статистика внутри вашего бота формируется не Telegram, а кодом, который написал ваш разработчик. В подавляющем большинстве случаев расхождение объясняется именно этим.</div>
+<h4>Типичные причины</h4>
+<ul>
+<li><b>Условия засчитывания.</b> Бот считает пользователя не сразу после <code>/start</code>, а только после капчи, подписки или отправки телефона</li>
+<li><b>Ошибка в логике подсчёта</b> уникальных пользователей</li>
+<li><b>Технический сбой</b> — бот был недоступен в момент прихода трафика</li>
+<li><b>Проблемы с базой данных</b> при записи новых пользователей</li>
+</ul>
+<h4>Как считаем мы</h4>
+<p>Официальным методом Telegram API <code>getChatMember</code>:</p>
+<ol class="steps">
+<li>Перед показом рекламы запрашиваем статус пользователя. Ответ <code>user not found</code> означает, что в вашем боте его раньше не было</li>
+<li>После перехода запрашиваем снова. Если статус изменился на <code>member</code> — фиксируем успешный запуск</li>
+</ol>
+<p>Таким образом в нашу статистику попадают только <strong>уникальные</strong> пользователи, которые фактически запустили вашего бота.</p>
+</div>
+</details>
+<details class="qa" id="verify">
+<summary><span class="lvl lvl-pro">Про</span> Как проверить нас независимо</summary>
+<div class="qa-body">
+<p>Вам не нужно верить нам на слово. Проверить нашу статистику можно сторонним сервисом, к которому мы не имеем отношения.</p>
+<ol class="steps">
+<li>Выгрузите список User ID приведённых пользователей: <code>Мои заказы → ваш заказ → Скачать ID</code></li>
+<li>Откройте бот-верификатор <a href="https://t.me/BotSafeRobot">@BotSafeRobot</a> от сервиса BotStat.io</li>
+<li>Отправьте ему токен вашего бота и выгруженный список ID</li>
+<li>Дождитесь результата проверки</li>
+</ol>
+<div class="note ok"><b>На что смотреть</b>Поле <b>«Отсутствуют»</b>. Значение <b>0</b> означает, что абсолютно все пользователи из списка действительно запускали ваш бот.</div>
+<p>Для каналов проверка ещё проще: откройте статистику своей <a href="#invite-link">пригласительной ссылки</a> в Telegram и сравните число вступлений с числом в нашем интерфейсе.</p>
+</div>
+</details>
+<details class="qa" id="blacklist">
+<summary><span class="lvl lvl-pro">Про</span> Как исключить плохие источники трафика</summary>
+<div class="qa-body">
+<p>Это ваш главный инструмент управления качеством — и он бесплатный.</p>
+<h4>Исключение конкретных источников</h4>
+<p>В статистике заказа видно, из каких приложений пришли подписчики и сколько вы за них заплатили. Если источник даёт плохое качество — исключите его, и ваш заказ больше никогда там не покажется.</p>
+<p>Через API это делается методом <code>/toggle-exclusion</code> с контекстом <code>advertiser</code>.</p>
+<h4>Исключение целых тематик</h4>
+<p>Можно отключить целые категории источников — например, «Заработок», если вам не нужна аудитория, которая подписывается ради денег.</p>
+<div class="note"><b>Рабочая практика</b>После первых 300–500 подписчиков откройте разбивку по источникам. Обычно 80% проблем даёт два-три источника. Исключите их — и средняя стоимость целевого действия по кампании упадёт заметно сильнее, чем от любого фильтра.</div>
+</div>
+</details>
+</section>
+<!-- ================= АНАЛИТИКА ================= -->
+<section class="cat" id="analytics">
+<div class="cat-head"><h2>Аналитика и API</h2></div>
+<p class="cat-sub">Отчёты, выгрузки и автоматизация.</p>
+<details class="qa" id="stats">
+<summary><span class="lvl lvl-pro">Про</span> Что показывает статистика</summary>
+<div class="qa-body">
+<p>По каждому заказу и по всем заказам сразу доступны:</p>
+<ul>
+<li><b>Динамика по дням</b> — количество подписок, расход, средняя цена подписчика</li>
+<li><b>Итоги за период</b> — всего подписок и всего потрачено</li>
+<li><b>Разбивка по источникам</b> — сколько подписчиков и денег дал каждый источник, исключён он или нет</li>
+<li><b>Распределение по языкам</b> привлечённой аудитории</li>
+<li><b>Прогресс заказа</b> — выполнено, осталось, базовая и итоговая цена с коэффициентами</li>
+</ul>
+<h4>Статусы заказа</h4>
+<div class="tw"><table>
+<tr><th>Статус</th><th>Что означает</th></tr>
+<tr><td><b>На модерации</b></td><td>Проверяем заказ, показов пока нет</td></tr>
+<tr><td><b>Выполняется</b></td><td>Активен, набирает подписчиков</td></tr>
+<tr><td><b>Остановлен</b></td><td>Поставлен на паузу вручную</td></tr>
+<tr><td><b>Выполнен</b></td><td>Достигнут общий лимит</td></tr>
+<tr><td><b>Отклонён</b></td><td>Не прошёл модерацию, причина указана в карточке</td></tr>
+<tr><td><b>В архиве</b></td><td>Удалён из активного списка</td></tr>
+</table></div>
+</div>
+</details>
+<details class="qa" id="export">
+<summary><span class="lvl lvl-pro">Про</span> Выгрузка ID подписчиков и Excel-отчёты</summary>
+<div class="qa-body">
+<h4>Список User ID</h4>
+<p>По любому заказу можно выгрузить txt-файл со списком Telegram ID всех приведённых пользователей. Нужен для сверки с вашей базой, для <a href="#verify">независимой проверки</a> и для настройки рассылок.</p>
+<h4>Excel-отчёт</h4>
+<p>Подробный отчёт по заказу с разбивкой по периодам: сегодня, 3 / 7 / 14 / 30 / 90 дней или всё время. Опционально с ценами. Доступен на русском и английском.</p>
+<div class="note"><b>Ограничения</b>Формирование отчёта и выгрузка ID — не чаще одного запроса в минуту на заказ. Отчёт готовится асинхронно: вы отправляете запрос, получаете идентификатор задачи и забираете готовый файл, когда он будет собран.</div>
+</div>
+</details>
+<details class="qa" id="api">
+<summary><span class="lvl lvl-pro">Про</span> Управление заказами через API</summary>
+<div class="qa-body">
+<p>Если вы ведёте много кампаний или строите собственную систему закупки — всё можно автоматизировать.</p>
+<h4>Что доступно</h4>
+<ul>
+<li><b>Создание заказа</b> с полным набором таргетинга и расписания</li>
+<li><b>Обновление</b> — менять цену, лимиты, ставить на паузу и снимать</li>
+<li><b>Дублирование</b> — копия заказа со всеми настройками, создаётся на паузе</li>
+<li><b>Список и карточка заказа</b> с прогрессом и применёнными коэффициентами</li>
+<li><b>Отчёты и выгрузка ID</b></li>
+<li><b>Баланс и статистика</b></li>
+<li><b>Управление чёрными списками</b></li>
+<li><b>Справочник фильтров</b> — актуальные ID стран, городов, языков, возрастов вместе с долей каждого сегмента в системе. Помогает заранее оценить, насколько фильтр сузит аудиторию</li>
+</ul>
+<div class="note warn"><b>Про ключи</b>Для управления заказами используется секретный ключ доступа, для чтения статистики — отдельный токен. Секретный ключ не передавайте никому и не зашивайте в клиентский код.</div>
+</div>
+</details>
+<details class="qa" id="webhooks">
+<summary><span class="lvl lvl-pro">Про</span> Вебхуки: события в реальном времени</summary>
+<div class="qa-body">
+<p>Вместо того чтобы опрашивать API, можно получать мгновенные уведомления на свой сервер о каждой подписке и отписке.</p>
+<p>Вы указываете публичный HTTPS-адрес и выбираете, какие события хотите получать: только подписки, только отписки или всё сразу. Дальше мы шлём POST-запросы с массивом событий.</p>
+<h4>Что приходит в событии</h4>
+<div class="tw"><table>
+<tr><th>Поле</th><th>Описание</th></tr>
+<tr><td>ID события</td><td>Больше значение — позднее событие. По нему восстанавливается порядок</td></tr>
+<tr><td>ID заказа</td><td>К какой кампании относится</td></tr>
+<tr><td>Ссылка</td><td>Через какую ссылку произошло взаимодействие</td></tr>
+<tr><td>ID пользователя</td><td>Telegram ID</td></tr>
+<tr><td>Статус</td><td><code>subscribed</code>, <code>unsubscribed</code> или <code>notgetted</code></td></tr>
+<tr><td>Дата подписки</td><td>Когда пользователь подписался <b>впервые</b>. Не меняется при отписке и повторной подписке</td></tr>
+</table></div>
+<div class="note"><b>Рекомендации</b>Отвечайте <code>200 OK</code> максимально быстро, тяжёлую обработку выносите в фон. Обязательно проверяйте ключ в заголовке запроса — так вы убедитесь, что событие пришло действительно от нас. Помните, что в одном запросе может прийти сразу несколько событий.</div>
+</div>
+</details>
+</section>
+<!-- ================= ПРОБЛЕМЫ ================= -->
+<section class="cat" id="problems">
+<div class="cat-head"><h2>Решение проблем</h2></div>
+<p class="cat-sub">Что делать, если что-то идёт не так.</p>
+<details class="qa" id="not-running">
+<summary><span class="lvl lvl-start">Старт</span> Заказ не набирает или набирает слишком медленно</summary>
+<div class="qa-body">
+<p>Пройдите по списку сверху вниз — в 95% случаев причина одна из первых трёх.</p>
+<div class="tw"><table>
+<tr><th>Проверьте</th><th>Что делать</th></tr>
+<tr><td><b>Ссылка с ограничением</b></td><td>Пригласительная ссылка не должна иметь лимита вступлений и срока действия. Создайте новую без ограничений</td></tr>
+<tr><td><b>Цена на минимуме</b></td><td>Вы в конце очереди аукциона. Поднимите ставку на 10–15% и посмотрите на скорость</td></tr>
+<tr><td><b>Слишком узкий таргетинг</b></td><td>Снимите самые дорогие фильтры — город, возраст 25+, реальное фото. Проверьте долю сегмента в справочнике фильтров</td></tr>
+<tr><td><b>Достигнут дневной лимит</b></td><td>Поднимите лимит или дождитесь следующих суток</td></tr>
+<tr><td><b>Расписание</b></td><td>Заказ может стоять вне окна показов или в исключённом дне недели</td></tr>
+<tr><td><b>Бот убран из админов</b></td><td>Верните права — без них подписки не фиксируются</td></tr>
+<tr><td><b>Исключено слишком много источников</b></td><td>Проверьте чёрный список — возможно, вы отсекли большую часть сети</td></tr>
+</table></div>
+</div>
+</details>
+<details class="qa" id="bad-quality">
+<summary><span class="lvl lvl-start">Старт</span> Пришли подписчики, но они неактивны</summary>
+<div class="qa-body">
+<p>Мотив-подписчик приходит за конкретной выгодой, а не за вашим контентом. Задача первых дней — превратить его в читателя. Что помогает:</p>
+<ul>
+<li><b>Отсеките худшие источники.</b> Тематика «Заработок» даёт самую холодную аудиторию — исключите её первой</li>
+<li><b>Добавьте дешёвые фильтры качества</b> — «есть юзернейм» и «есть фото» по ×1.1</li>
+<li><b>Проверьте контент-план.</b> Если после вступления человек несколько дней не видит ничего интересного, он отпишется. Публикуйте регулярно с первого дня набора</li>
+<li><b>Включите «проверен на фейк»</b>, если подозреваете мультиаккаунты</li>
+<li><b>Растяните набор.</b> Плавное распределение вместо залпа даёт время на прогрев</li>
+</ul>
+<div class="note"><b>Считайте правильную метрику</b>Не цену подписчика, а цену целевого действия — регистрации, заявки, покупки. Мотив может давать вдвое худший ER и при этом впятеро более дешёвое действие.</div>
+</div>
+</details>
+<details class="qa" id="support">
+<summary><span class="lvl lvl-start">Старт</span> Как связаться с поддержкой</summary>
+<div class="qa-body">
+<p>Пишите в Telegram: <a href="https://t.me/traffy_support">@traffy_support</a>. Отвечаем быстро и по делу.</p>
+<h4>Чтобы решить вопрос с первого сообщения, приложите</h4>
+<ul>
+<li>ID заказа</li>
+<li>Что ожидали и что получилось на самом деле</li>
+<li>Скриншот статистики или настроек заказа</li>
+<li>Если речь о расхождении цифр — выгрузку ID и результат проверки в <a href="https://t.me/BotSafeRobot">@BotSafeRobot</a></li>
+</ul>
+</div>
+</details>
+</section>
+</main>
+</div>
+<footer class="foot">
+<div class="foot-in">
+<span>© TRAFFY — трафик в Telegram. Вопросы по базе знаний: <a href="https://t.me/traffy_support">@traffy_support</a></span>
+<a class="btn btn-primary" href="https://t.me/Traffy_robot">Перейти в сервис</a>
+</div>
+</footer>
+<script>
+(function(){
+  // тема
+  var root=document.documentElement, btn=document.getElementById('theme');
+  var saved=null; try{saved=localStorage.getItem('traffy-theme');}catch(e){}
+  var init=saved||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  set(init);
+  function set(t){root.setAttribute('data-theme',t); btn.textContent=(t==='dark'?'☀️':'🌙'); try{localStorage.setItem('traffy-theme',t);}catch(e){}}
+  btn.addEventListener('click',function(){set(root.getAttribute('data-theme')==='dark'?'light':'dark');});
+
+  // поиск
+  var q=document.getElementById('q'), items=[].slice.call(document.querySelectorAll('.qa')), cats=[].slice.call(document.querySelectorAll('.cat'));
+  var empty=document.createElement('div'); empty.className='empty'; empty.innerHTML='<p>Ничего не нашлось. Попробуйте другое слово или <a href="https://t.me/traffy_support">спросите поддержку</a>.</p>';
+  document.getElementById('main').appendChild(empty);
+  q.addEventListener('input',function(){
+    var v=q.value.trim().toLowerCase(), found=0;
+    items.forEach(function(it){
+      var hit=!v||it.textContent.toLowerCase().indexOf(v)>-1;
+      it.style.display=hit?'':'none';
+      if(hit){found++; if(v) it.open=true;}
+      if(!v) it.open=(it.id==='premium-economics');
+    });
+    cats.forEach(function(c){
+      c.style.display=c.querySelectorAll('.qa:not([style*="none"])').length?'':'none';
+    });
+    empty.classList.toggle('on',found===0);
+  });
+
+  // открыть по якорю
+  function openHash(){
+    var h=location.hash.slice(1); if(!h) return;
+    var el=document.getElementById(h);
+    if(el&&el.classList.contains('qa')){el.open=true; el.scrollIntoView({behavior:'smooth',block:'start'});}
+  }
+  window.addEventListener('hashchange',openHash); openHash();
+  items.forEach(function(it){
+    it.querySelector('summary').addEventListener('click',function(){
+      if(!it.open) history.replaceState(null,'','#'+it.id);
+    });
+  });
+
+  // подсветка активного раздела
+  var links=[].slice.call(document.querySelectorAll('.side a'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id);});
+      });
+    },{rootMargin:'-90px 0px -70% 0px'});
+    cats.forEach(function(c){io.observe(c);});
+  }
+})();
+</script>
+</body>
+</html>
