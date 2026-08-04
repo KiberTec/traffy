@@ -120,6 +120,9 @@ h1{font-size:clamp(25px,3vw,32px); line-height:1.18; letter-spacing:-.025em; mar
 
 /* ---------- layout ---------- */
 .layout{max-width:1180px; margin:0 auto; padding:28px 24px 80px; display:grid; grid-template-columns:246px 1fr; gap:40px; align-items:start}
+/* без этого таблицы в ответах (min-width:440px) растягивают колонку по своей
+   min-content ширине, и на телефоне разъезжается вся страница, а не только .tw */
+.layout>*{min-width:0}
 .side{position:sticky; top:82px}
 .side-title{font-size:12px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--text-mute); margin:0 0 12px 12px}
 .side a{
@@ -240,6 +243,17 @@ td b{color:var(--text)}
   .side-title,.side-cta,.side .n{display:none}
   .side a{white-space:nowrap; background:var(--bg-elev); border:1px solid var(--border)}
   .hero{padding:36px 20px 24px}
+}
+@media(max-width:560px){
+  .top-in{padding:12px 14px; gap:10px}
+  .top-nav{gap:6px}
+  .brand{font-size:16.5px}
+  .btn{padding:8px 12px; font-size:13px}
+  .btn-icon{padding:8px 10px}
+}
+@media(max-width:430px){
+  /* три кнопки в шапку не помещаются; поддержка остаётся в блоке внизу страницы */
+  .top-nav .btn:not(.btn-primary):not(.btn-icon){display:none}
 }
 </style>
 </head>
