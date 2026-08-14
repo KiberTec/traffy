@@ -6,12 +6,12 @@
 <title>TRAFFY — трафик в Telegram. Целевая аудитория в десять раз дешевле рынка</title>
 <meta name="description" content="Мотивированный трафик в Telegram: подписчики в каналы от 2 ₽, запуски ботов и переходы в Mini Apps. Таргетинг по Premium, гео, возрасту и устройству. Платите только за тех, кто остался.">
 <meta name="theme-color" content="#5b5bd6">
-<link rel="canonical" href="https://traffy-robot.ru/">
+<link rel="canonical" href="https://traffy.ai/">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://traffy-robot.ru/">
+<meta property="og:url" content="https://traffy.ai/">
 <meta property="og:title" content="TRAFFY — трафик в Telegram">
 <meta property="og:description" content="Целевая аудитория в Telegram в десять раз дешевле рынка. Подписчики от 2 ₽, оплата только за тех, кто остался.">
-<meta property="og:image" content="https://traffy-robot.ru/photo-traffy.jpeg">
+<meta property="og:image" content="https://traffy.ai/photo-traffy.jpeg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
 :root{
@@ -61,6 +61,15 @@ a:hover{text-decoration:underline}
 .btn-primary:hover{opacity:.9; color:#fff}
 .btn-icon{padding:9px 11px}
 @media(max-width:720px){ .nav-links{display:none} }
+.btn-web{padding:9px 14px; gap:8px}
+.btn-web .av{
+  width:20px; height:20px; border-radius:6px; flex-shrink:0;
+  background:var(--accent-soft); color:var(--accent-text);
+  display:flex; align-items:center; justify-content:center;
+}
+.btn-web .av svg{width:12px; height:12px}
+/* три кнопки в шапку не влезают; адрес веб-версии остаётся в подвале */
+@media(max-width:560px){ .btn-web{display:none} }
 
 .cta{
   max-width:1000px; margin:72px auto; padding:clamp(32px,5vw,56px) clamp(24px,4vw,48px);
@@ -399,6 +408,10 @@ a:hover{text-decoration:underline}
     </nav>
     <div class="nav-right">
       <button class="btn btn-icon" id="theme" type="button" title="Сменить тему" aria-label="Сменить тему">🌙</button>
+      <a class="btn btn-web" href="https://app.traffy.ai" title="Веб-версия — app.traffy.ai">
+        <span class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c1.2-3.8 4-5.6 7.5-5.6s6.3 1.8 7.5 5.6"/></svg></span>
+        Войти
+      </a>
       <a class="btn btn-primary" href="https://t.me/Traffy_robot">Запустить трафик</a>
     </div>
   </div>
@@ -617,6 +630,7 @@ a:hover{text-decoration:underline}
   <div class="foot-in">
     <span>© TRAFFY — трафик в Telegram</span>
     <nav class="foot-links">
+      <a href="https://app.traffy.ai">app.traffy.ai</a>
       <a href="/faq.html">База знаний</a>
       <a href="https://t.me/Traffy_robot">Сервис</a>
       <a href="https://t.me/traffy_support">Поддержка</a>

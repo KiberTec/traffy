@@ -17,7 +17,7 @@ ARTICLES_DIR = BASE_DIR / "articles"
 ARTICLES_JSON = ARTICLES_DIR / "articles.json"
 RSS_FILE = BASE_DIR / "rss.xml"
 SITEMAP_FILE = BASE_DIR / "sitemap.xml"
-SITE_URL = "https://traffy-robot.ru"
+SITE_URL = "https://traffy.ai"
 
 # Темы для генерации
 TOPICS = [

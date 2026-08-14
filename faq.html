@@ -29,12 +29,12 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>TRAFFY — База знаний для рекламодателей</title>
 <meta content="Как покупать мотивированный трафик в Telegram через TRAFFY: запуск заказа, таргетинг, цены, учёт отписок, антифрод, статистика и API." name="description"/>
-<link rel="canonical" href="https://traffy-robot.ru/faq.html"/>
+<link rel="canonical" href="https://traffy.ai/faq.html"/>
 <meta property="og:type" content="article"/>
-<meta property="og:url" content="https://traffy-robot.ru/faq.html"/>
+<meta property="og:url" content="https://traffy.ai/faq.html"/>
 <meta property="og:title" content="TRAFFY — База знаний для рекламодателей"/>
 <meta property="og:description" content="Как покупать мотивированный трафик в Telegram: запуск заказа, таргетинг, цены, учёт отписок, антифрод, статистика и API."/>
-<meta property="og:image" content="https://traffy-robot.ru/photo-traffy.jpeg"/>
+<meta property="og:image" content="https://traffy.ai/photo-traffy.jpeg"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <style>
 :root{
@@ -251,6 +251,17 @@ td b{color:var(--text)}
   .btn{padding:8px 12px; font-size:13px}
   .btn-icon{padding:8px 10px}
 }
+.btn-web{padding:9px 14px; gap:8px}
+.btn-web .av{
+  width:20px; height:20px; border-radius:6px; flex-shrink:0;
+  background:var(--accent-soft); color:var(--accent-text);
+  display:flex; align-items:center; justify-content:center;
+}
+.btn-web .av svg{width:12px; height:12px}
+@media(max-width:640px){
+  /* адрес веб-версии остаётся в подвале */
+  .btn-web{display:none}
+}
 @media(max-width:430px){
   /* три кнопки в шапку не помещаются; поддержка остаётся в блоке внизу страницы */
   .top-nav .btn:not(.btn-primary):not(.btn-icon){display:none}
@@ -263,6 +274,7 @@ td b{color:var(--text)}
 <a class="brand" href="/index.html"><span class="bf">🦋</span> TRAFFY</a>
 <nav class="top-nav">
 <button aria-label="Сменить тему" class="btn btn-icon" id="theme" title="Сменить тему">🌙</button>
+<a class="btn btn-web" href="https://app.traffy.ai" title="Веб-версия — app.traffy.ai"><span class="av"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 24 24"><circle cx="12" cy="8" r="3.4"></circle><path d="M4.5 20c1.2-3.8 4-5.6 7.5-5.6s6.3 1.8 7.5 5.6"></path></svg></span> Войти</a>
 <a class="btn" href="https://t.me/traffy_support">Поддержка</a>
 <a class="btn btn-primary" href="https://t.me/Traffy_robot">Перейти в сервис</a>
 </nav>
@@ -939,7 +951,7 @@ td b{color:var(--text)}
 </div>
 <footer class="foot">
 <div class="foot-in">
-<span>© TRAFFY — трафик в Telegram. Вопросы по базе знаний: <a href="https://t.me/traffy_support">@traffy_support</a></span>
+<span>© TRAFFY — трафик в Telegram. Веб-версия: <a href="https://app.traffy.ai">app.traffy.ai</a>. Вопросы по базе знаний: <a href="https://t.me/traffy_support">@traffy_support</a></span>
 <a class="btn btn-primary" href="https://t.me/Traffy_robot">Перейти в сервис</a>
 </div>
 </footer>
