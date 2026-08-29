@@ -1,19 +1,19 @@
 # TRAFFY - Telegram Advertising Agency
-# https://traffy.ai
+# https://go.traffy.ai
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://traffy.ai/sitemap.xml
+Sitemap: https://go.traffy.ai/sitemap.xml
 
 # RSS Feed
-# https://traffy.ai/rss.xml
+# https://go.traffy.ai/rss.xml
 
 # Yandex specific
 User-agent: Yandex
 Allow: /
-Host: traffy.ai
+Host: go.traffy.ai
 
 # Google specific  
 User-agent: Googlebot

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Цены и тарифы — TRAFFY</title>
+<meta name="description" content="Сколько стоит подписчик, запуск бота и переход: минимальные цены по типам заказов, коэффициенты таргетинга и пример расчёта.">
+<meta name="theme-color" content="#5b5bd6">
+<link rel="canonical" href="https://go.traffy.ai/docs/tariffs.html">
+<style>
+:root{
+  --bg:#f6f7f9; --bg-elev:#fff; --bg-soft:#eef0f4;
+  --text:#12141a; --text-dim:#5a6070; --text-mute:#8b91a0;
+  --border:#e2e5ec; --border-strong:#cfd4de;
+  --accent:#5b5bd6; --accent-soft:#ececfb; --accent-text:#4a4ac4;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0d0f14; --bg-elev:#151821; --bg-soft:#1c2029;
+    --text:#eceef4; --text-dim:#a2a9b8; --text-mute:#6e7686;
+    --border:#242936; --border-strong:#333a4a;
+    --accent:#8b8bf5; --accent-soft:#1e2038; --accent-text:#a5a5fa;
+  }
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--text); overflow-x:hidden;
+  font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent-text)}
+.top{border-bottom:1px solid var(--border); background:var(--bg-elev)}
+.top-in{max-width:820px; margin:0 auto; padding:14px 22px; display:flex; align-items:center; gap:14px}
+.brand{display:flex; align-items:center; gap:9px; font-weight:700; font-size:18px; letter-spacing:-.02em; color:var(--text); text-decoration:none}
+.top-in .back{margin-left:auto; font-size:14.5px; color:var(--text-dim); text-decoration:none}
+.wrap{max-width:820px; margin:0 auto; padding:38px 22px 70px}
+h1{font-size:clamp(25px,4vw,32px); letter-spacing:-.03em; line-height:1.18; margin:0 0 10px}
+.rev{font-size:14px; color:var(--text-mute); margin:0 0 28px}
+h2{font-size:19.5px; letter-spacing:-.02em; margin:36px 0 12px}
+h3{font-size:16.5px; margin:22px 0 8px}
+p,li{color:var(--text-dim); font-size:15.5px}
+p{margin:0 0 13px}
+ul{margin:0 0 14px; padding-left:22px}
+li{margin-bottom:7px}
+b,strong{color:var(--text); font-weight:650}
+.vals{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:0 0 26px}
+.vals>*{min-width:0}
+.val{background:var(--bg-elev); border:1px solid var(--border); border-radius:13px; padding:18px 18px 16px}
+.val b{display:block; font-size:26px; font-weight:750; letter-spacing:-.03em; color:var(--accent-text); line-height:1.15; margin-bottom:5px}
+.val span{font-size:14px; color:var(--text-dim); line-height:1.5}
+.note{
+  background:var(--bg-elev); border:1px solid var(--border); border-left:3px solid var(--accent);
+  border-radius:10px; padding:15px 17px; margin:16px 0;
+}
+.note p:last-child{margin-bottom:0}
+.tw{overflow-x:auto; margin:16px 0; border:1px solid var(--border); border-radius:10px}
+table{border-collapse:collapse; width:100%; font-size:14.5px; min-width:440px}
+th,td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--border); vertical-align:top; color:var(--text-dim)}
+th{background:var(--bg-soft); color:var(--text); font-weight:650; font-size:13px; white-space:nowrap}
+td b{color:var(--text)}
+tr:last-child td{border-bottom:0}
+.calc{background:var(--bg-soft); border-radius:12px; padding:20px 20px 16px; margin:18px 0}
+.calc .line{font-size:15.5px; color:var(--text-dim); margin-bottom:8px}
+.calc .res{font-size:18px; font-weight:700; color:var(--text); letter-spacing:-.02em; margin-top:12px; padding-top:12px; border-top:1px solid var(--border)}
+.foot{border-top:1px solid var(--border); margin-top:40px; padding-top:18px; font-size:13.5px; color:var(--text-mute)}
+.foot a{margin-right:14px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="/">🦋 TRAFFY</a>
+    <a class="back" href="/docs/">Все документы</a>
+  </div>
+</header>
+
+<main class="wrap">
+<h1>Цены и тарифы</h1>
+<p class="rev">Редакция от 29 августа 2026 года. Все цены указаны в рублях, НДС не облагается.</p>
+
+<p>Вы платите за подтверждённые целевые действия — подписки, заявки, запуски бота или переходы. Абонентской платы, платы за создание аккаунта и обязательных пакетов нет. Деньги списываются с баланса по мере выполнения заказа.</p>
+
+<div class="vals">
+  <div class="val"><b>от 1.3 ₽</b><span>минимальная цена за целевое действие</span></div>
+  <div class="val"><b>от 100 ₽</b><span>минимальная сумма пополнения баланса</span></div>
+  <div class="val"><b>0 ₽</b><span>регистрация, создание заказа и доступ к статистике</span></div>
+</div>
+
+<h2>Минимальные цены по типам заказов</h2>
+<p>Цену за целевое действие назначаете вы сами, но не ниже минимальной планки для выбранного типа заказа. Чем выше ваша ставка, тем выше заказ в очереди показа.</p>
+
+<div class="tw">
+<table>
+<tr><th>Тип заказа</th><th>За что списываются деньги</th><th>Минимальная цена</th></tr>
+<tr><td><b>Канал или чат с учётом отписок</b></td><td>За подписчика, который остался в течение расчётного периода</td><td><b>от 2 ₽</b></td></tr>
+<tr><td><b>Канал или чат на заявки</b></td><td>За заявку на вступление</td><td><b>от 1.3 ₽</b></td></tr>
+<tr><td><b>Бот</b></td><td>За уникальный запуск бота</td><td><b>от 1.3 ₽</b></td></tr>
+<tr><td><b>Ресурс без проверки</b></td><td>За предполагаемый переход по ссылке</td><td><b>от 1.3 ₽</b></td></tr>
+</table>
+</div>
+
+<div class="note">
+<p>Актуальную минимальную цену для конкретного заказа всегда видно в сервисе: Главное меню → Мои заказы → ваш заказ → Настройки → Цена за подписчика.</p>
+</div>
+
+<h2>Коэффициенты за параметры аудитории</h2>
+<p>Чем уже аудитория, тем она дороже. К назначенной цене применяются множители — они перемножаются между собой. Итоговую цену сервис показывает до запуска заказа.</p>
+
+<div class="tw">
+<table>
+<tr><th>Параметр</th><th>Коэффициент</th></tr>
+<tr><td>Таргет по городу</td><td>×2</td></tr>
+<tr><td>Таргет по стране</td><td>×1.5</td></tr>
+<tr><td>Тип устройства</td><td>×1.5</td></tr>
+<tr><td>Операционная система</td><td>×1.5</td></tr>
+<tr><td>Возраст: младше 10 / 11–13 лет</td><td>×1.2</td></tr>
+<tr><td>Возраст: 14–15 / 16–17 лет</td><td>×1.5</td></tr>
+<tr><td>Возраст: 18–24 года</td><td>×2.0</td></tr>
+<tr><td>Возраст: 25 лет и старше</td><td>×2.5</td></tr>
+<tr><td>Реальное фото в профиле</td><td>×1.4</td></tr>
+<tr><td>Наличие фото, юзернейма, описания, имени, РУ-имени, кириллицы</td><td>×1.1 за каждый признак</td></tr>
+<tr><td>Возраст аккаунта: от 2 / 3 / 5 / 7 / 9 лет</td><td>×1.1 … ×1.5</td></tr>
+<tr><td>Подарки Telegram: от 1 / 10 / 20 / 50 / 100</td><td>×1.1 … ×1.5</td></tr>
+<tr><td>Рейтинг профиля: от 1 / 2 / 5 / 7 / 10</td><td>×1.1 … ×1.5</td></tr>
+</table>
+</div>
+
+<p>При выборе нескольких возрастных категорий применяется не максимальный коэффициент, а средневзвешенный — по доле пользователей в каждой выбранной категории.</p>
+
+<h3>Пример расчёта</h3>
+<div class="calc">
+  <div class="line">Базовая цена — <b>2.5 ₽</b></div>
+  <div class="line">Таргет на конкретный город — ×2</div>
+  <div class="line">Возраст 18–24 и 25+ — средневзвешенный ×1.88</div>
+  <div class="line">Наличие фото в профиле — ×1.1</div>
+  <div class="res">2.5 × 2 × 1.88 × 1.1 = 4.13 ₽ за подписчика. Общий множитель ×3.48</div>
+</div>
+
+<h2>Ориентиры по нишам</h2>
+<p>Итоговая цена зависит от того, насколько узкую аудиторию вы запрашиваете.</p>
+<div class="tw">
+<table>
+<tr><th>Задача</th><th>Ориентировочная цена за подписчика</th></tr>
+<tr><td>Широкая аудитория без таргетинга</td><td>от 2 ₽</td></tr>
+<tr><td>Premium-подписчик с таргетом по полу и возрасту</td><td>около 10 ₽</td></tr>
+<tr><td>Узкая платёжеспособная ниша с несколькими фильтрами</td><td>от 100 ₽</td></tr>
+</table>
+</div>
+<div class="note">
+<p>Цены в этой таблице — ориентир, а не оферта на конкретную сумму. Точную стоимость с учётом ваших настроек сервис рассчитывает перед запуском заказа.</p>
+</div>
+
+<h2>Оплата</h2>
+<p>Оплата производится авансом: вы пополняете баланс, деньги списываются по мере выполнения заказов.</p>
+<ul>
+<li>Минимальная сумма пополнения — 100 ₽. Этого достаточно, чтобы протестировать качество трафика.</li>
+<li>Пополнение доступно в сервисе: Главное меню → Баланс → Пополнить. Способы оплаты отображаются на этом шаге.</li>
+<li>Комиссия сервиса за пополнение не взимается. Комиссия платёжной системы, если она предусмотрена её правилами, отображается до подтверждения платежа.</li>
+<li>Неизрасходованный остаток не сгорает и остаётся на балансе для следующих заказов.</li>
+</ul>
+
+<h2>Что не тарифицируется</h2>
+<ul>
+<li>Действия, не прошедшие техническую проверку.</li>
+<li>Пользователи, которых Telegram не засчитал как уникальных.</li>
+<li>Отписавшиеся подписчики в заказах с учётом отписок — их стоимость возвращается на баланс при выполнении условий учёта.</li>
+<li>Создание и остановка заказов, изменение настроек, доступ к статистике и выгрузкам.</li>
+</ul>
+
+<h2>Возврат средств</h2>
+<p>Неизрасходованный остаток баланса возвращается по заявлению в поддержку. Срок рассмотрения — до 10 рабочих дней, возврат производится тем же способом, которым была произведена оплата.</p>
+<p>Средства, списанные за подтверждённые целевые действия, возврату не подлежат — услуга в этой части оказана. Порядок описан в разделе 8 <a href="/docs/terms.html#s8">Пользовательского соглашения</a>.</p>
+
+<h2>Вопросы по цене</h2>
+<p>Если непонятно, из чего сложилась итоговая стоимость заказа, напишите в поддержку — <a href="https://t.me/traffy_support">@traffy_support</a>. Расчёт по конкретному заказу разбирают персонально.</p>
+
+<div class="foot">
+  <a href="/docs/">Все документы</a>
+  <a href="/docs/terms.html">Пользовательское соглашение</a>
+  <a href="/docs/privacy.html">Политика конфиденциальности</a>
+  <a href="https://t.me/traffy_support">Поддержка</a>
+</div>
+</main>
+
+</body>
+</html>

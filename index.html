@@ -6,12 +6,12 @@
 <title>TRAFFY — трафик в Telegram. Целевая аудитория в десять раз дешевле рынка</title>
 <meta name="description" content="Мотивированный трафик в Telegram: подписчики в каналы от 2 ₽, запуски ботов и переходы в Mini Apps. Таргетинг по Premium, гео, возрасту и устройству. Платите только за тех, кто остался.">
 <meta name="theme-color" content="#5b5bd6">
-<link rel="canonical" href="https://traffy.ai/">
+<link rel="canonical" href="https://go.traffy.ai/">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://traffy.ai/">
+<meta property="og:url" content="https://go.traffy.ai/">
 <meta property="og:title" content="TRAFFY — трафик в Telegram">
 <meta property="og:description" content="Целевая аудитория в Telegram в десять раз дешевле рынка. Подписчики от 2 ₽, оплата только за тех, кто остался.">
-<meta property="og:image" content="https://traffy.ai/photo-traffy.jpeg">
+<meta property="og:image" content="https://go.traffy.ai/photo-traffy.jpeg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
 :root{
@@ -87,6 +87,11 @@ a:hover{text-decoration:underline}
   font-size:14px; color:var(--text-dim);
 }
 .foot-links{display:flex; flex-wrap:wrap; gap:18px; margin-left:auto}
+.foot-sec{padding-top:0; border-top:1px solid var(--border); margin-top:-4px; padding-top:16px}
+.foot-links-sec{margin-left:0}
+.foot-links-sec a{color:var(--text-mute)}
+.foot-code{margin-left:auto; font-size:13px; color:var(--text-mute)}
+@media(max-width:640px){ .foot-code{margin-left:0} }
 
 /* ─── блоки ─── */
 .thero{max-width:840px; margin:34px auto 64px; text-align:center; font-family:inherit}
@@ -630,11 +635,22 @@ a:hover{text-decoration:underline}
   <div class="foot-in">
     <span>© TRAFFY — трафик в Telegram</span>
     <nav class="foot-links">
+      <a href="/docs/terms.html">Пользовательское соглашение</a>
+      <a href="/docs/privacy.html">Политика конфиденциальности</a>
+      <a href="/docs/tariffs.html">Цены и тарифы</a>
+      <a href="https://t.me/traffy_support">Поддержка</a>
+    </nav>
+  </div>
+  <div class="foot-in foot-sec">
+    <nav class="foot-links foot-links-sec">
       <a href="https://app.traffy.ai">app.traffy.ai</a>
       <a href="/faq.html">База знаний</a>
       <a href="https://t.me/Traffy_robot">Сервис</a>
-      <a href="https://t.me/traffy_support">Поддержка</a>
+      <a href="/docs/">Все документы</a>
     </nav>
+    <!-- ВРЕМЕННО: кодовое слово для верификации платёжного провайдера.
+         Убрать после регистрации кассы. -->
+    <span class="foot-code">Кодовое слово: платега верификация</span>
   </div>
 </footer>
 
